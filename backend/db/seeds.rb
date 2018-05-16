@@ -7,5 +7,3 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create({name: "Alec", username: "alecp", password: "1234"})
-
-Track.create({name: "test-track", description: "this is a test", user_id: 1})

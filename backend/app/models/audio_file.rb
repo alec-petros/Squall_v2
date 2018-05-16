@@ -7,5 +7,6 @@ class AudioFile < ApplicationRecord
     file = client.upload(filepath: Rails.root.to_s + "/public" + self.file.url)
     self.track.handle = file.handle
     self.track.url = file.url
+    self.track.save
   end
 end

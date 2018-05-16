@@ -15,16 +15,25 @@ class AudioFilesController < ApplicationController
 
   # POST /audio_files
   def create
-    @audio_file = AudioFile.new({
-      file: params['audio_file'],
+    @track = Track.new({
       name: params['name'],
-      track_id: params['track_id']
+      description: params['description'],
+      user_id: params['user_id']
       })
-    if @audio_file.save
-      @audio_file.filestack_upload
-      render json: @audio_file, status: :created, location: @audio_file
+    if @track.save
+      @audio_file = AudioFile.new({
+        file: params['audio_file'],
+        name: params['name'],
+        track_id: @track.id
+        })
+      if @audio_file.save
+        @audio_file.filestack_upload
+        render json: @audio_file, status: :created, location: @audio_file
+      else
+        render json: @audio_file.errors, status: :unprocessable_entity
+      end
     else
-      render json: @audio_file.errors, status: :unprocessable_entity
+      render json: @track.errors, status: :unprocessable_entity
     end
   end
 

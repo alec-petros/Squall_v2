@@ -3,11 +3,12 @@ import React from 'react';
 class Uploader extends React.Component {
 
   state = {
-    filename: ""
+    filename: "",
+    description: ""
   }
 
   handleChange = (e) => {
-    this.setState({filename: e.target.value})
+    this.setState({[e.target.name]: e.target.value})
   }
 
   handleSubmit = (e) => {
@@ -18,6 +19,8 @@ class Uploader extends React.Component {
     formData.append('audio_file', fileInput.files[0])
     formData.append('track_id', '1')
     formData.append('name', this.state.filename)
+    formData.append('description', this.state.description)
+    formData.append('user_id', '1')
     fetch('http://localhost:3000/audio_files', {
       method: "POST",
       body: formData
@@ -29,8 +32,9 @@ class Uploader extends React.Component {
     return (
       <div>
         <form id="uploadForm" name="audio_file" onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="Filename" value={this.state.filename} onChange={this.handleChange}></input>
-          <input type="file" id="fileInput"></input>
+          <input type="text" name="filename" placeholder="Name" value={this.state.filename} onChange={this.handleChange}></input><br></br>
+          <textarea placeholder="Description" name="description" value={this.state.description} onChange={this.handleChange}></textarea><br></br>
+          <input type="file" id="fileInput"></input><br></br>
           <input type="submit"></input>
         </form>
       </div>
