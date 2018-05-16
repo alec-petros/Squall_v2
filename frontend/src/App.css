@@ -7,9 +7,10 @@
 }
 
 #transport {
-  height: 80px;
+  position: absolute;
+  bottom: 0px;
+  height: 100px;
   width: 100%;
-  background-color: lightgrey;
   text-align: left;
 }
 
@@ -19,6 +20,12 @@
   background-color: grey;
   margin-bottom: 20px;
   text-align: left;
+}
+
+#play-button {
+  position: absolute;
+  width: 100px;
+  height: 100px;
 }
 
 @keyframes App-logo-spin {

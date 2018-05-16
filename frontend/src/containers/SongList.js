@@ -1,18 +1,18 @@
 import React from 'react';
 import Song from '../components/Song'
+import { connect } from 'react-redux'
+import { setActive } from '../actions/actions'
 
 
 class SongList extends React.Component {
 
-  state = {
-
-  }
-
   render() {
+
+    console.log(this.props)
 
     const songs = this.props.songs.map(song => {
       return (
-        <Song key={'song-comp-' + song.id} song={song} />
+        <Song setActive={this.props.setActive} key={'song-comp-' + song.id} song={song} />
       )
     })
 
@@ -24,4 +24,8 @@ class SongList extends React.Component {
   }
 }
 
-export default SongList
+function mapStateToProps(state) {
+  return {songs: state.songs, activeSong: state.activeSong}
+}
+
+export default connect(mapStateToProps, { setActive })(SongList)

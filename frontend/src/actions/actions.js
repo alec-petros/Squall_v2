@@ -43,3 +43,22 @@ export function logout() {
     })
   }
 }
+
+export function setSongs(songs) {
+  return (dispatch) => {
+    fetch('http://localhost:3000/api/v1/tracks')
+    .then(r => r.json())
+    .then(json => {
+      dispatch({
+        type: "SET_SONGS",
+        payload: json
+      })
+    })
+  }
+}
+
+export function setActive(song) {
+  return (dispatch) => {
+    dispatch({type: "SET_ACTIVE", payload: song})
+  }
+}

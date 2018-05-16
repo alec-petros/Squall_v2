@@ -8,7 +8,7 @@ import LoginForm from './components/LoginForm'
 import NavContainer from './components/NavContainer'
 import Transport from './components/Transport'
 import { connect } from 'react-redux';
-import { setAuth, logout } from './actions/actions'
+import { setAuth, logout, setSongs } from './actions/actions'
 import {
   BrowserRouter as Switch,
   Redirect,
@@ -18,18 +18,12 @@ import {
 
 class App extends Component {
 
-  state = {
-    songs: []
-  }
-
   componentDidMount() {
     if (localStorage.auth) {
       const auth = JSON.parse(localStorage.auth)
       this.props.setAuth(auth)
     }
-    fetch('http://localhost:3000/api/v1/tracks')
-    .then(r => r.json())
-    .then(json => this.setState({songs: json}))
+    this.props.setSongs()
   }
 
   authFetched = (auth) =>{
@@ -49,7 +43,7 @@ class App extends Component {
         <div id="main-body">
           <NavContainer />
           <Route exact path="/" render={ (renderProps) =>
-            <SongList songs={ this.state.songs } history={ renderProps.history }/>
+            <SongList history={ renderProps.history }/>
           } />
           <Route path="/register" render={ (renderProps) =>
             <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
@@ -61,14 +55,18 @@ class App extends Component {
             <LoginForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
         </div>
-        <Transport />
+        {
+          this.props.activeSong ?
+          <Transport /> :
+          null
+        }
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { auth: state.auth }
+  return { auth: state.auth, songs: state.songs, activeSong: state.activeSong }
 }
 
-export default connect(mapStateToProps, { setAuth, logout })(App);
+export default connect(mapStateToProps, { setAuth, logout, setSongs })(App);
