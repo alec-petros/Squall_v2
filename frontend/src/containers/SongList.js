@@ -12,13 +12,9 @@ class SongList extends React.Component {
 
     const songs = this.props.songs.map(song => {
       return (
-        <Song song={song} />
+        <Song key={'song-comp-' + song.id} song={song} />
       )
     })
-
-
-
-    console.log(songs)
 
     return(
       <div>

@@ -13,10 +13,33 @@ export function login(username, password){
     })
     .then(res => res.json())
     .then(userData => {
-      dispatch({
-        type: "LOGIN_USER",
-        payload: userData
-      })
+      if (userData.errors) {
+        alert("stuff")
+      } else {
+        localStorage.auth = JSON.stringify(userData)
+        dispatch({
+          type: "LOGIN_USER",
+          payload: userData
+        })
+      }
+    })
+  }
+}
+
+export function setAuth(auth){
+  return (dispatch) => {
+    dispatch({
+      type: "LOGIN_USER",
+      payload: auth
+    })
+  }
+}
+
+export function logout() {
+  return (dispatch) => {
+    dispatch({
+      type: "LOGOUT",
+      payload: null
     })
   }
 }

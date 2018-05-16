@@ -8,6 +8,7 @@ import LoginForm from './components/LoginForm'
 import NavContainer from './components/NavContainer'
 import Transport from './components/Transport'
 import { connect } from 'react-redux';
+import { setAuth, logout } from './actions/actions'
 import {
   BrowserRouter as Switch,
   Redirect,
@@ -24,7 +25,7 @@ class App extends Component {
   componentDidMount() {
     if (localStorage.auth) {
       const auth = JSON.parse(localStorage.auth)
-      this.setState({ auth });
+      this.props.setAuth(auth)
     }
     fetch('http://localhost:3000/api/v1/tracks')
     .then(r => r.json())
@@ -38,15 +39,15 @@ class App extends Component {
 
   logout = () => {
     localStorage.removeItem("auth")
+    this.props.logout()
     this.setState({ auth: null })
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="App">
         <div id="main-body">
-          <NavContainer auth={this.state.auth} />
+          <NavContainer />
           <Route exact path="/" render={ (renderProps) =>
             <SongList songs={ this.state.songs } history={ renderProps.history }/>
           } />
@@ -70,4 +71,4 @@ function mapStateToProps(state) {
   return { auth: state.auth }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { setAuth, logout })(App);

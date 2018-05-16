@@ -14,30 +14,31 @@ class AuthForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.login(this.state.username, this.state.password)
+    this.props.history.push('/')
     // const { username, password } = this.state;
     // const auth = { username, password };
     // this.doFetch(auth)
   }
 
-  doFetch(auth) {
-    fetch(this.props.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/javascript"
-      },
-      body: JSON.stringify(auth)
-    }).then((resp) => resp.json())
-    .then((data) => {
-        if (data.errors) {
-          this.setState({ errors: data.errors })
-        } else {
-          this.setState({ ...this.DEFAULT_STATE })
-          this.props.authSet(data)
-          this.props.history.push('/')
-        }
-      })
-  }
+  // doFetch(auth) {
+  //   fetch(this.props.url, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accept": "application/javascript"
+  //     },
+  //     body: JSON.stringify(auth)
+  //   }).then((resp) => resp.json())
+  //   .then((data) => {
+  //       if (data.errors) {
+  //         this.setState({ errors: data.errors })
+  //       } else {
+  //         this.setState({ ...this.DEFAULT_STATE })
+  //         this.props.authSet(data)
+  //         this.props.history.push('/')
+  //       }
+  //     })
+  // }
 
   handleChange = (event) => {
     this.setState({
@@ -72,7 +73,7 @@ class AuthForm extends React.Component {
 }
 
 function mapStateToProps(state){
-  auth: state.auth
+  return {auth: state.auth}
 }
 
 export default connect(mapStateToProps, {login})(AuthForm)
