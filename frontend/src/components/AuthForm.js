@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
+import { login } from '../actions/actions'
 
-export default class AuthForm extends React.Component {
+class AuthForm extends React.Component {
 
   DEFAULT_STATE = {
     username: "",
@@ -9,11 +11,12 @@ export default class AuthForm extends React.Component {
   }
   state = this.DEFAULT_STATE
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { username, password } = this.state;
-    const auth = { username, password };
-    this.doFetch(auth)
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.login(this.state.username, this.state.password)
+    // const { username, password } = this.state;
+    // const auth = { username, password };
+    // this.doFetch(auth)
   }
 
   doFetch(auth) {
@@ -66,5 +69,10 @@ export default class AuthForm extends React.Component {
       </form>
     </div>)
   }
-
 }
+
+function mapStateToProps(state){
+  auth: state.auth
+}
+
+export default connect(mapStateToProps, {login})(AuthForm)

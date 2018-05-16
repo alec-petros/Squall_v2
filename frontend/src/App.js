@@ -6,12 +6,14 @@ import SongList from './containers/SongList'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import NavContainer from './components/NavContainer'
+import Transport from './components/Transport'
+import { connect } from 'react-redux';
 import {
   BrowserRouter as Switch,
   Redirect,
   Route
 } from 'react-router-dom';
-import Transport from './components/Transport'
+
 
 class App extends Component {
 
@@ -40,7 +42,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.songs)
+    console.log(this.props)
     return (
       <div className="App">
         <div id="main-body">
@@ -64,4 +66,8 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return { auth: state.auth }
+}
+
+export default connect(mapStateToProps)(App);
