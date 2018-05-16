@@ -1,4 +1,5 @@
-class TracksController < ApplicationController
+class Api::V1::TracksController < ApplicationController
+  skip_before_action :authenticate!, only: [:index, :show]
   before_action :set_track, only: [:show, :update, :destroy]
 
   # GET /tracks

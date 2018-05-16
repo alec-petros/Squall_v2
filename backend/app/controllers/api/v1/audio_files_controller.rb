@@ -1,4 +1,4 @@
-class AudioFilesController < ApplicationController
+class Api::V1::AudioFilesController < ApplicationController
   before_action :set_audio_file, only: [:show, :update, :destroy]
 
   # GET /audio_files

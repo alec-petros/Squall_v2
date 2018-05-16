@@ -21,7 +21,7 @@ class Uploader extends React.Component {
     formData.append('name', this.state.filename)
     formData.append('description', this.state.description)
     formData.append('user_id', '1')
-    fetch('http://localhost:3000/audio_files', {
+    fetch('http://localhost:3000/api/v1/audio_files', {
       method: "POST",
       body: formData
     })
