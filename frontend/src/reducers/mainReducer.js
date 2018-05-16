@@ -1,5 +1,5 @@
 
-export default function shoppingListItemReducer(state = {auth: null, songs: [], activeSong: null}, action) {
+export default function shoppingListItemReducer(state = {auth: null, songs: [], activeSong: null, transportMode: "pause"}, action) {
   switch(action.type) {
     case 'LOGIN_USER':
       return {...state, auth: action.payload};
@@ -10,6 +10,10 @@ export default function shoppingListItemReducer(state = {auth: null, songs: [], 
       return {...state, songs: action.payload}
     case 'SET_ACTIVE':
       return {...state, activeSong: action.payload}
+    case 'TRANSPORT_CLICK':
+      let mode = null
+      state.transportMode === 'pause' ? mode = 'play' : mode = 'pause'
+      return {...state, transportMode: mode}
     default:
       return state;
   }

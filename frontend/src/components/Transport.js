@@ -1,6 +1,8 @@
 import React from 'react';
 import play from '../images/play.png'
+import pause from '../images/pause.png'
 import { connect } from 'react-redux'
+import {transportClick} from '../actions/actions'
 
 class Transport extends React.Component {
 
@@ -13,7 +15,8 @@ class Transport extends React.Component {
     this.audioStore.canvas = document.getElementById("transport-canvas")
     this.audioStore.canvasCtx = this.audioStore.canvas.getContext('2d')
 
-    this.audioStore.source = this.audioStore.audioCtx.createMediaElementSource(document.getElementById('transport-audio'));
+    this.audioStore.htmlElement = document.getElementById('transport-audio')
+    this.audioStore.source = this.audioStore.audioCtx.createMediaElementSource(this.audioStore.htmlElement);
     this.audioStore.source.connect(this.audioStore.analyser);
     this.audioStore.analyser.connect(this.audioStore.audioCtx.destination);
 
@@ -41,7 +44,7 @@ class Transport extends React.Component {
     this.audioStore.canvasCtx.beginPath();
 
     var sliceWidth = this.audioStore.canvas.width * 1.0 / this.audioStore.bufferLength;
-    var x = 0;
+    var x = 27;
 
     for(var i = 0; i < this.audioStore.bufferLength; i++) {
 
@@ -61,7 +64,13 @@ class Transport extends React.Component {
   };
 
   startPlayback = () => {
-    document.getElementById('transport-audio').play()
+    this.audioStore.htmlElement.play()
+    this.props.transportClick()
+  }
+
+  stopPlayback = () => {
+    this.audioStore.htmlElement.pause()
+    this.props.transportClick()
   }
 
 
@@ -69,7 +78,12 @@ class Transport extends React.Component {
     console.log(this.props)
     return (
       <div  id="transport">
-        <img onClick={this.startPlayback} id="play-button" src={play}></img>
+        {
+          this.props.transportMode === 'pause' ?
+          <img onClick={this.startPlayback} id="play-button" src={play}></img> :
+          <img onClick={this.stopPlayback} id="play-button" src={pause}></img>
+        }
+
         <audio crossOrigin="anonymous" src={this.props.activeSong.url} id="transport-audio"></audio>
         <canvas id="transport-canvas" width="800" height='100'></canvas>
       </div>
@@ -78,7 +92,7 @@ class Transport extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {activeSong: state.activeSong}
+  return {activeSong: state.activeSong, transportMode: state.transportMode}
 }
 
-export default connect(mapStateToProps)(Transport)
+export default connect(mapStateToProps, {transportClick})(Transport)

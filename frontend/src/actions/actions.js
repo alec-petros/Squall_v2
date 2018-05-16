@@ -62,3 +62,9 @@ export function setActive(song) {
     dispatch({type: "SET_ACTIVE", payload: song})
   }
 }
+
+export function transportClick() {
+  return (dispatch) => {
+    dispatch({type: 'TRANSPORT_CLICK', payload: null})
+  }
+}
