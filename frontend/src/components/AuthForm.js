@@ -31,6 +31,7 @@ export default class AuthForm extends React.Component {
         } else {
           this.setState({ ...this.DEFAULT_STATE })
           this.props.authSet(data)
+          this.props.history.push('/')
         }
       })
   }

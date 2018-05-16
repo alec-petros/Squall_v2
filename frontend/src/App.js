@@ -4,12 +4,14 @@ import './App.css';
 import Uploader from './components/Uploader'
 import SongList from './containers/SongList'
 import RegisterForm from './components/RegisterForm'
-import NavBar from './components/NavBar'
+import LoginForm from './components/LoginForm'
+import NavContainer from './components/NavContainer'
 import {
   BrowserRouter as Switch,
   Redirect,
   Route
 } from 'react-router-dom';
+import Transport from './components/Transport'
 
 class App extends Component {
 
@@ -32,23 +34,31 @@ class App extends Component {
     this.setState({ auth });
   }
 
+  logout = () => {
+    localStorage.removeItem("auth")
+    this.setState({ auth: null })
+  }
+
   render() {
     console.log(this.state.songs)
     return (
       <div className="App">
-        <NavBar />
-        <Route exact path="/" render={ (renderProps) =>
-          <SongList songs={ this.state.songs } history={ renderProps.history }/>
-        } />
-        <Route path="/register" render={ (renderProps) =>
-          <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
-        } />
-        <Route path="/upload" render={ (renderProps) =>
-          this.state.auth ? <Uploader history={ renderProps.history } /> : <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
-        } />
-
-
-
+        <div id="main-body">
+          <NavContainer auth={this.state.auth} />
+          <Route exact path="/" render={ (renderProps) =>
+            <SongList songs={ this.state.songs } history={ renderProps.history }/>
+          } />
+          <Route path="/register" render={ (renderProps) =>
+            <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
+          } />
+          <Route path="/upload" render={ (renderProps) =>
+            this.state.auth ? <Uploader history={ renderProps.history } /> : <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
+          } />
+          <Route path="/login" render={ (renderProps) =>
+            <LoginForm authSet={ this.authFetched } history={ renderProps.history } />
+          } />
+        </div>
+        <Transport />
       </div>
     );
   }
