@@ -1,24 +1,25 @@
 import React from 'react';
 import Song from '../components/Song'
-
+import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setActive } from '../actions/actions'
 
 
 class SongList extends React.Component {
 
+  reroute = (id) => {
+    this.props.history.push(`/track/${id}`)
+  }
+
   render() {
-
-    console.log(this.props)
-
     const songs = this.props.songs.map(song => {
       return (
-        <Song history={this.props.history} setActive={this.props.setActive} key={'song-comp-' + song.id} song={song} />
+        <Song reroute={this.reroute} setActive={this.props.setActive} key={'song-comp-' + song.id} song={song} />
       )
     })
 
     return(
-      <div>
+      <div id="songList">
         {songs}
       </div>
     )
@@ -26,7 +27,7 @@ class SongList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {songs: state.songs, activeSong: state.activeSong}
+  return {activeSong: state.activeSong}
 }
 
-export default connect(mapStateToProps, { setActive })(SongList)
+export default withRouter(connect(mapStateToProps, { setActive })(SongList))

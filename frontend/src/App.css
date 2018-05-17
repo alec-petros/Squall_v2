@@ -15,6 +15,10 @@
   font-size: 20px;
 }
 
+.song-artist {
+  font-size: 14px;
+}
+
 .song-date {
   font-size: 10px;
   font-style: italic;
@@ -24,8 +28,13 @@
   height: 80%;
 }
 
+#songList {
+  padding: 20px;
+}
+
 #showDiv {
   display: inline-block;
+  padding: 20px;
   float: left;
   width: 100%;
 }

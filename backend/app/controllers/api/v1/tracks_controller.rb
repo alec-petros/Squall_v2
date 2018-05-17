@@ -6,7 +6,18 @@ class Api::V1::TracksController < ApplicationController
   def index
     @tracks = Track.all
 
-    render json: @tracks.reverse
+    destructured = @tracks.reverse.map do |track|
+      {
+        id: track.id,
+        name: track.name,
+        artist: track.user.name,
+        artist_id: track.user_id,
+        url: track.url,
+        created_at: track.created_at
+      }
+    end
+
+    render json: destructured
   end
 
   # GET /tracks/1

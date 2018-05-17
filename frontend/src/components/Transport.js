@@ -75,7 +75,6 @@ class Transport extends React.Component {
 
 
   render() {
-    console.log(this.props)
     return (
       <div  id="transport">
         {
@@ -91,8 +90,8 @@ class Transport extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapPoopToProps(state) {
   return {activeSong: state.activeSong, transportMode: state.transportMode}
 }
 
-export default connect(mapStateToProps, {transportClick})(Transport)
+export default connect(mapPoopToProps, {transportClick})(Transport)

@@ -8,6 +8,8 @@ import LoginForm from './components/LoginForm'
 import NavContainer from './containers/NavContainer'
 import Transport from './components/Transport'
 import ShowTrack from './components/ShowTrack'
+import ShowUser from './components/ShowUser'
+import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setAuth, logout, setSongs } from './actions/actions'
 import {
@@ -44,8 +46,8 @@ class App extends Component {
         <div id="main-body">
           <NavContainer />
           <Route exact path="/" render={ (renderProps) =>
-            <SongList history={ renderProps.history }/>
-          } />
+              <SongList history={ renderProps.history } songs={ this.props.songs } />
+            } />
           <Route path="/register" render={ (renderProps) =>
             <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
@@ -56,6 +58,7 @@ class App extends Component {
             <LoginForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
         <Route path="/track/:id" component={ShowTrack} />
+        <Route path="/user/:id" component={ShowUser} />
         </div>
         {
           this.props.activeSong ?
@@ -71,4 +74,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, songs: state.songs, activeSong: state.activeSong }
 }
 
-export default connect(mapStateToProps, { setAuth, logout, setSongs })(App);
+export default withRouter(connect(mapStateToProps, { setAuth, logout, setSongs })(App));

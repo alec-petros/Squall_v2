@@ -80,3 +80,9 @@ export function setShow(song) {
     dispatch({type: "SET_SHOW", payload: song})
   }
 }
+
+export function setShowUser(user) {
+  return (dispatch) => {
+    dispatch({type: "SET_SHOW_USER", payload: user})
+  }
+}

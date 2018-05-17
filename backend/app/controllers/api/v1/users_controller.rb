@@ -11,7 +11,22 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    user_serialized = {
+      name: @user.name,
+      username: @user.username,
+      created_at: @user.created_at,
+      id: @user.id
+    }
+    user_serialized[:tracks] = @user.tracks.reverse.map do |track|
+      {
+        id: track.id,
+        name: track.name,
+        artist: track.user.name,
+        url: track.url,
+        created_at: track.created_at
+      }
+    end
+    render json: user_serialized
   end
 
   # POST /users

@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom'
 import {withRouter} from 'react-router-dom'
 import Panel from 'react-bootstrap/lib/Panel'
 import play from '../images/play.png'
@@ -13,7 +12,8 @@ class Song extends React.Component {
     return (
       <Panel className="song">
         <img className="song-play" src={play} onClick={() => {this.props.setActive(this.props.song)}} height="50px"></img>
-        <NavLink to={`/track/${this.props.song.id}`} className="song-meta">{this.props.song.name} </NavLink>
+        <span className="song-artist" onClick={() => {this.props.history.push(`/user/${this.props.song.artist_id}`)}}>{this.props.song.artist} - </span>
+        <p className="song-meta" onClick={() => this.props.reroute(this.props.song.id)}>{this.props.song.name} </p>
         <span className="song-date"> Uploaded on {date}</span>
       </Panel>
     )

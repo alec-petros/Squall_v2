@@ -3,7 +3,8 @@ const defaultState = {
   songs: [],
   activeSong: null,
   transportMode: "pause",
-  showSong: null
+  showSong: null,
+  showUser: null
 }
 
 
@@ -26,6 +27,8 @@ export default function shoppingListItemReducer(state = defaultState, action) {
       return {...state, songs: [action.payload, ...state.songs]}
     case 'SET_SHOW':
       return {...state, showSong: action.payload}
+    case 'SET_SHOW_USER':
+      return {...state, showUser: action.payload}
     default:
       return state;
   }
