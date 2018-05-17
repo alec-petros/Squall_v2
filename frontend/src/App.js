@@ -7,6 +7,7 @@ import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import NavContainer from './containers/NavContainer'
 import Transport from './components/Transport'
+import ShowTrack from './components/ShowTrack'
 import { connect } from 'react-redux';
 import { setAuth, logout, setSongs } from './actions/actions'
 import {
@@ -54,6 +55,7 @@ class App extends Component {
           <Route path="/login" render={ (renderProps) =>
             <LoginForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
+        <Route path="/track/:id" component={ShowTrack} />
         </div>
         {
           this.props.activeSong ?

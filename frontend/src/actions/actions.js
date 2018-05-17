@@ -74,3 +74,9 @@ export function addSong(song) {
     dispatch({type: "ADD_SONG", payload: song})
   }
 }
+
+export function setShow(song) {
+  return (dispatch) => {
+    dispatch({type: "SET_SHOW", payload: song})
+  }
+}

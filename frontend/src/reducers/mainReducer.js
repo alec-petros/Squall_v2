@@ -1,5 +1,13 @@
+const defaultState = {
+  auth: null,
+  songs: [],
+  activeSong: null,
+  transportMode: "pause",
+  showSong: null
+}
 
-export default function shoppingListItemReducer(state = {auth: null, songs: [], activeSong: null, transportMode: "pause"}, action) {
+
+export default function shoppingListItemReducer(state = defaultState, action) {
   switch(action.type) {
     case 'LOGIN_USER':
       return {...state, auth: action.payload};
@@ -16,6 +24,8 @@ export default function shoppingListItemReducer(state = {auth: null, songs: [], 
       return {...state, transportMode: mode}
     case 'ADD_SONG':
       return {...state, songs: [action.payload, ...state.songs]}
+    case 'SET_SHOW':
+      return {...state, showSong: action.payload}
     default:
       return state;
   }

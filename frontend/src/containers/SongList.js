@@ -1,5 +1,6 @@
 import React from 'react';
 import Song from '../components/Song'
+
 import { connect } from 'react-redux'
 import { setActive } from '../actions/actions'
 
@@ -12,7 +13,7 @@ class SongList extends React.Component {
 
     const songs = this.props.songs.map(song => {
       return (
-        <Song setActive={this.props.setActive} key={'song-comp-' + song.id} song={song} />
+        <Song history={this.props.history} setActive={this.props.setActive} key={'song-comp-' + song.id} song={song} />
       )
     })
 
