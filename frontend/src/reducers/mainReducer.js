@@ -14,6 +14,8 @@ export default function shoppingListItemReducer(state = {auth: null, songs: [], 
       let mode = null
       state.transportMode === 'pause' ? mode = 'play' : mode = 'pause'
       return {...state, transportMode: mode}
+    case 'ADD_SONG':
+      return {...state, songs: [action.payload, ...state.songs]}
     default:
       return state;
   }

@@ -5,7 +5,7 @@ import Uploader from './components/Uploader'
 import SongList from './containers/SongList'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
-import NavContainer from './components/NavContainer'
+import NavContainer from './containers/NavContainer'
 import Transport from './components/Transport'
 import { connect } from 'react-redux';
 import { setAuth, logout, setSongs } from './actions/actions'
@@ -49,7 +49,7 @@ class App extends Component {
             <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
           <Route path="/upload" render={ (renderProps) =>
-            this.state.auth ? <Uploader history={ renderProps.history } /> : <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
+            this.props.auth ? <Uploader history={ renderProps.history } /> : <RegisterForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
           <Route path="/login" render={ (renderProps) =>
             <LoginForm authSet={ this.authFetched } history={ renderProps.history } />
@@ -57,7 +57,7 @@ class App extends Component {
         </div>
         {
           this.props.activeSong ?
-          <Transport /> :
+          <Transport key="transport" /> :
           null
         }
       </div>

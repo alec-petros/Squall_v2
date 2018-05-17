@@ -68,3 +68,9 @@ export function transportClick() {
     dispatch({type: 'TRANSPORT_CLICK', payload: null})
   }
 }
+
+export function addSong(song) {
+  return (dispatch) => {
+    dispatch({type: "ADD_SONG", payload: song})
+  }
+}

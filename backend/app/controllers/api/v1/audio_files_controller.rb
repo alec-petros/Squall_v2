@@ -18,7 +18,7 @@ class Api::V1::AudioFilesController < ApplicationController
     @track = Track.new({
       name: params['name'],
       description: params['description'],
-      user_id: params['user_id']
+      user_id: current_user_id
       })
     if @track.save
       @audio_file = AudioFile.new({
@@ -28,7 +28,7 @@ class Api::V1::AudioFilesController < ApplicationController
         })
       if @audio_file.save
         @audio_file.filestack_upload
-        render json: @audio_file, status: :created, location: @audio_file
+        render json: @track
       else
         render json: @audio_file.errors, status: :unprocessable_entity
       end
