@@ -42,7 +42,7 @@ class App extends Component {
     return (
       <div className="App">
         <div id="main-body">
-          <NavContainer />
+          <NavContainer history={this.props.history} logout={this.logout} />
           <Route exact path="/" render={ (renderProps) =>
               <SongList history={ renderProps.history } songs={ this.props.songs } />
             } />

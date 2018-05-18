@@ -15,6 +15,7 @@ class Api::V1::AudioFilesController < ApplicationController
 
   # POST /audio_files
   def create
+    byebug
     @track = Track.new({
       name: params['name'],
       description: params['description'],

@@ -23,22 +23,10 @@ class Api::V1::UsersController < ApplicationController
       id: @user.id
     }
     user_serialized[:tracks] = @user.tracks.reverse.map do |track|
-      {
-        id: track.id,
-        name: track.name,
-        artist: track.user.name,
-        url: track.url,
-        created_at: track.created_at
-      }
+      track.destructure
     end
     user_serialized[:favorites] = @user.favorite_tracks.reverse.map do |track|
-      {
-        id: track.id,
-        name: track.name,
-        artist: track.user.name,
-        url: track.url,
-        created_at: track.created_at
-      }
+      track.destructure
     end
     render json: user_serialized
   end

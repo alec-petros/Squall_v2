@@ -10,7 +10,9 @@ export default class LoginForm extends React.Component {
       <h3>Log In</h3>
         { this.props.auth ? <Redirect to="/" /> : null }
         <AuthForm { ...this.props }
-                       url="http://localhost:3000/sessions" />
+         url="http://localhost:3000/sessions"
+         mode="login"
+         />
       </div>
     )
   }

@@ -35,11 +35,10 @@ class Song extends React.Component {
         </img>
         <span className="song-artist" onClick={() => {this.props.history.push(`/user/${this.props.song.artist_id}`)}}>{this.props.song.artist} - </span>
         <p className="song-meta" onClick={() => this.props.reroute(this.props.song.id)}>{this.props.song.name} </p>
-        <img className="song-like" src={imgSrc} onClick={this.handleLike}></img>
+        {this.props.auth ? <img className="song-like" src={imgSrc} onClick={this.handleLike}></img> : null}
       </Panel>
     )
   }
-
 }
 
 export default withRouter(Song)

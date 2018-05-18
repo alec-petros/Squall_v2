@@ -39,6 +39,7 @@
   vertical-align: top;
 }
 
+
 .song-date {
   font-size: 10px;
   font-style: italic;
@@ -84,6 +85,10 @@
   height: 100px;
   width: 100%;
   text-align: left;
+}
+
+#vol-control {
+  display: fixed;
 }
 
 #navbar {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login, getFavorites } from '../actions/actions'
+import { login, getFavorites, register } from '../actions/actions'
 
 class AuthForm extends React.Component {
 
@@ -13,11 +13,12 @@ class AuthForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.login(this.state.username, this.state.password)
+    if (this.props.mode === "login") {
+      this.props.login(this.state.username, this.state.password)
+    } else {
+      this.props.register(this.state.username, this.state.password)
+    }
     this.props.history.push('/')
-    // const { username, password } = this.state;
-    // const auth = { username, password };
-    // this.doFetch(auth)
   }
 
   // doFetch(auth) {
@@ -76,4 +77,4 @@ function mapStateToProps(state){
   return {auth: state.auth}
 }
 
-export default connect(mapStateToProps, { login, getFavorites })(AuthForm)
+export default connect(mapStateToProps, { login, getFavorites, register })(AuthForm)

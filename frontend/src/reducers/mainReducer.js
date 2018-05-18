@@ -15,7 +15,6 @@ export default function shoppingListItemReducer(state = defaultState, action) {
     case 'LOGIN_USER':
       return {...state, auth: action.payload};
     case 'LOGOUT':
-      localStorage.removeItem("auth")
       return {...state, auth: null}
     case 'SET_SONGS':
       return {...state, songs: action.payload}

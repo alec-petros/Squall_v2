@@ -12,6 +12,7 @@ class SongList extends React.Component {
   }
 
   render() {
+    console.log(this.props.songs)
     let show
     this.props.songs ?
     show = this.props.songs.map(song => {

@@ -11,13 +11,9 @@ class Api::V1::FavoritesController < ApplicationController
 
   def delete
     @favorite = Favorite.find(params['id'])
-
     @favorite.destroy
-
     render json: {
       huge: "huge"
     }
-
   end
-
 end

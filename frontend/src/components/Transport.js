@@ -87,7 +87,6 @@ class Transport extends React.Component {
           <img onClick={this.startPlayback} id="play-button" src={play}></img> :
           <img onClick={this.stopPlayback} id="play-button" src={pause}></img>
         }
-
         <audio crossOrigin="anonymous" src={this.props.activeSong.url} id="transport-audio"></audio>
         <canvas id="transport-canvas" width="800" height='100'></canvas>
       </div>

@@ -11,35 +11,35 @@ class NavBar extends React.Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">Squall V1</a>
+            <a onClick={() => this.props.history.push(`/`)}>Squall V1</a>
           </Navbar.Brand>
         </Navbar.Header>
         { this.props.auth ?
-          <Navbar.Text>
+          <Navbar.Text onClick={() => this.props.history.push(`/user/${this.props.auth.user_id}`)}>
             Signed in as: {this.props.auth.username}
           </Navbar.Text> :
           null
         }
         <Nav pullRight>
           { !this.props.auth ?
-            <NavItem href="/register">
+            <Navbar.Text onClick={() => this.props.history.push(`/register`)}>
               Register
-            </NavItem> :
+            </Navbar.Text> :
             null
           }
           { this.props.auth ?
-            <NavItem href='/upload'>
+            <Navbar.Text onClick={() => this.props.history.push(`/upload`)}>
               Upload
-            </NavItem> :
+            </Navbar.Text> :
             null
           }
           { !this.props.auth ?
-            <NavItem href="/login">
+            <Navbar.Text onClick={() => this.props.history.push(`/login`)}>
               Login
-            </NavItem> :
-            <NavItem onClick={this.props.logout} href="/">
+            </Navbar.Text> :
+            <Navbar.Text onClick={this.props.logout}>
               Logout
-            </NavItem>
+            </Navbar.Text>
           }
         </Nav>
       </Navbar>

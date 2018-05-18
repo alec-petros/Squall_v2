@@ -41,6 +41,30 @@ export function login(username, password){
   }
 }
 
+export function register(username, password) {
+  return (dispatch) => {
+    fetch(API_URL + '/api/v1/users', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/javascript"
+      },
+      body: JSON.stringify({username: username, password: password})
+    }).then((resp) => resp.json())
+    .then((data) => {
+      if (data.errors) {
+        alert("Please try again")
+      } else {
+        localStorage.auth = JSON.stringify(data)
+        dispatch({
+          type: "LOGIN_USER",
+          payload: data
+        })
+      }
+    })
+  }
+}
+
 export function getFavorites(auth) {
   return (dispatch) => {
     fetch(API_URL + `api/v1/users/${auth.user_id}/favorites`, {
