@@ -91,7 +91,12 @@ export function unlike(favObj, auth){
       }
     })
     .then(r => r.json())
-    .then(console.log)
+    .then(json => {
+      dispatch({
+        type: "REMOVE_FAV",
+        payload: favObj.id
+      })
+    })
   }
 }
 

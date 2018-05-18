@@ -5,7 +5,7 @@ class Api::V1::FavoritesController < ApplicationController
 
     if @favorite.save
 
-      render json: @favorite.track.destructure
+      render json: @favorite
     end
   end
 
