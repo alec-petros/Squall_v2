@@ -7,6 +7,10 @@ import fullHeart from '../images/fullHeart.png'
 
 class Song extends React.Component {
 
+  play = () => {
+    fetch(`http://localhost:3000/api/v1/tracks/${this.props.song.id}/play`)
+  }
+
   handleLike = () => {
     const favObj = this.props.favoriteList.find(fav => fav.track_id === this.props.song.id)
     if (favObj) {
@@ -29,6 +33,7 @@ class Song extends React.Component {
           src={play}
           onClick={() => {
               this.props.setActive(this.props.song);
+              this.play()
             }
           }
           height="50px">

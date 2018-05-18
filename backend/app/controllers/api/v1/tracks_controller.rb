@@ -1,6 +1,6 @@
 class Api::V1::TracksController < ApplicationController
-  skip_before_action :authenticate!, only: [:index, :show]
-  before_action :set_track, only: [:show, :update, :destroy]
+  skip_before_action :authenticate!, only: [:index, :show, :play]
+  before_action :set_track, only: [:show, :update, :destroy, :play]
 
   # GET /tracks
   def index
@@ -11,6 +11,12 @@ class Api::V1::TracksController < ApplicationController
     end
 
     render json: destructured
+  end
+
+  def play
+    @track.play_count === nil ? @track.play_count = 0 : null
+    @track.play_count += 1
+    @track.save
   end
 
   # GET /tracks/1

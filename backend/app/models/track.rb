@@ -14,6 +14,7 @@ class Track < ApplicationRecord
       artist: self.user.name,
       artist_id: self.user_id,
       url: self.url,
+      play_count: self.play_count;
       created_at: self.created_at
     }
   end
