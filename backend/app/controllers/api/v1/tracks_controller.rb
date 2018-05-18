@@ -7,14 +7,7 @@ class Api::V1::TracksController < ApplicationController
     @tracks = Track.all
 
     destructured = @tracks.reverse.map do |track|
-      {
-        id: track.id,
-        name: track.name,
-        artist: track.user.name,
-        artist_id: track.user_id,
-        url: track.url,
-        created_at: track.created_at
-      }
+      track.destructure
     end
 
     render json: destructured

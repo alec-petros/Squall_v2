@@ -2,9 +2,11 @@ const defaultState = {
   auth: null,
   songs: [],
   activeSong: null,
-  transportMode: "pause",
+  transportMode: "play",
   showSong: null,
-  showUser: null
+  showUser: null,
+  htmlAudio: null,
+  favoriteList: []
 }
 
 
@@ -29,6 +31,10 @@ export default function shoppingListItemReducer(state = defaultState, action) {
       return {...state, showSong: action.payload}
     case 'SET_SHOW_USER':
       return {...state, showUser: action.payload}
+    case 'ADD_FAV':
+      return {...state, showUser: {...state.showUser, favorites: [...state.showUser.favorites, action.payload]}}
+    case 'SET_FAVORITES':
+      return {...state, favoriteList: action.payload}
     default:
       return state;
   }

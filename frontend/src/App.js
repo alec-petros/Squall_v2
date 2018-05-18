@@ -11,7 +11,7 @@ import ShowTrack from './components/ShowTrack'
 import ShowUser from './components/ShowUser'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
-import { setAuth, logout, setSongs } from './actions/actions'
+import { setAuth, logout, setSongs, getFavorites } from './actions/actions'
 import {
   BrowserRouter as Switch,
   Redirect,
@@ -25,6 +25,7 @@ class App extends Component {
     if (localStorage.auth) {
       const auth = JSON.parse(localStorage.auth)
       this.props.setAuth(auth)
+      this.props.getFavorites(auth)
     }
     this.props.setSongs()
   }
@@ -74,4 +75,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, songs: state.songs, activeSong: state.activeSong }
 }
 
-export default withRouter(connect(mapStateToProps, { setAuth, logout, setSongs })(App));
+export default withRouter(connect(mapStateToProps, { setAuth, logout, setSongs, getFavorites })(App));

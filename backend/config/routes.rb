@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       resources :audio_files
       resources :tracks
       resources :users
+      get '/users/:id/favorites', to: 'users#favorites'
+      post '/favorites', to: 'favorites#create'
     end
   end
   post '/sessions/', to: 'sessions#create'

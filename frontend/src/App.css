@@ -10,6 +10,14 @@
   display: inline-block
 }
 
+.song-like {
+  display: inline-block;
+  height: 30px;
+  float: right;
+  padding-top: 5px;
+  padding-right: 10px;
+}
+
 .song-meta {
   display:inline-block;
   font-size: 20px;
@@ -17,6 +25,18 @@
 
 .song-artist {
   font-size: 14px;
+}
+
+#user-tracks {
+  width: 45%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+#user-favorites {
+  width: 45%;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .song-date {

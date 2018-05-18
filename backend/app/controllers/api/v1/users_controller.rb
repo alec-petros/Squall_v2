@@ -1,12 +1,20 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authenticate!, only: [:create, :show]
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :favorites]
 
   # GET /users
   def index
     @users = User.all
 
     render json: @users
+  end
+
+  # GET /users/:id/favorites
+  def favorites
+    favorites = @user.favorites.map do |fav|
+      fav.id
+    end
+    render json: favorites
   end
 
   # GET /users/1
@@ -18,6 +26,15 @@ class Api::V1::UsersController < ApplicationController
       id: @user.id
     }
     user_serialized[:tracks] = @user.tracks.reverse.map do |track|
+      {
+        id: track.id,
+        name: track.name,
+        artist: track.user.name,
+        url: track.url,
+        created_at: track.created_at
+      }
+    end
+    user_serialized[:favorites] = @user.favorite_tracks.reverse.map do |track|
       {
         id: track.id,
         name: track.name,

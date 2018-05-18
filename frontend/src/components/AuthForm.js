@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../actions/actions'
+import { login, getFavorites } from '../actions/actions'
 
 class AuthForm extends React.Component {
 
@@ -76,4 +76,4 @@ function mapStateToProps(state){
   return {auth: state.auth}
 }
 
-export default connect(mapStateToProps, {login})(AuthForm)
+export default connect(mapStateToProps, { login, getFavorites })(AuthForm)

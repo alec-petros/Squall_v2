@@ -19,19 +19,26 @@ class ShowUser extends React.Component {
 
   render() {
     console.log(this.props)
-    let show = null
+    let songs = null
     this.props.showUser ?
-    show = (
+    songs = (
       <div id="showDiv">
         <h1>{this.props.showUser.name}</h1>
-        <SongList history={ this.props.history } songs={ this.props.showUser.tracks } />
+        <div id="user-tracks">
+          <h4>{this.props.showUser.name}s Tracks</h4>
+          <SongList history={ this.props.history } songs={ this.props.showUser.tracks } />
+        </div>
+        <div id="user-favorites">
+          <h4>{this.props.showUser.name}s Favorites</h4>
+          <SongList history={ this.props.history } songs={ this.props.showUser.favorites } />
+        </div>
       </div>
     ) :
     null
 
     return (
       <div>
-        <h1>{this.props.showUser ? show : null}</h1>
+        <h1>{this.props.showUser ? songs : null}</h1>
       </div>
     )
   }

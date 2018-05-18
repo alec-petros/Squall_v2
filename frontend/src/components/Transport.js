@@ -6,6 +6,10 @@ import {transportClick} from '../actions/actions'
 
 class Transport extends React.Component {
 
+  state = {
+    activeSong: null
+  }
+
   audioStore = {
     audioCtx: new (window.AudioContext || window.webkitAudioContext)()
   }
@@ -25,6 +29,7 @@ class Transport extends React.Component {
     this.audioStore.dataArray = new Uint8Array(this.audioStore.bufferLength);
 
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray);
+    this.audioStore.htmlElement.play()
     this.draw();
   }
 
