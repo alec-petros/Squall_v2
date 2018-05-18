@@ -1,13 +1,15 @@
 import React from 'react';
 import play from '../images/play.png'
 import pause from '../images/pause.png'
+// import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { connect } from 'react-redux'
 import {transportClick} from '../actions/actions'
 
 class Transport extends React.Component {
 
   state = {
-    activeSong: null
+    activeSong: null,
+    vol: 100
   }
 
   audioStore = {
@@ -40,11 +42,11 @@ class Transport extends React.Component {
 
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray)
 
-    this.audioStore.canvasCtx.fillStyle = 'rgb(240, 240, 240)';
+    this.audioStore.canvasCtx.fillStyle = 'rgba(240, 240, 240, 1)';
     this.audioStore.canvasCtx.fillRect(0, 0, this.audioStore.canvas.width, this.audioStore.canvas.height);
 
     this.audioStore.canvasCtx.lineWidth = 2;
-    this.audioStore.canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+    this.audioStore.canvasCtx.strokeStyle = 'rgb(100, 0, 100)';
 
     this.audioStore.canvasCtx.beginPath();
 
@@ -67,6 +69,10 @@ class Transport extends React.Component {
     this.audioStore.canvasCtx.lineTo(this.audioStore.canvas.width, this.audioStore.canvas.height/2);
     this.audioStore.canvasCtx.stroke();
   };
+
+  changeValue = (e) => {
+    console.log(e)
+  }
 
   startPlayback = () => {
     this.audioStore.htmlElement.play()

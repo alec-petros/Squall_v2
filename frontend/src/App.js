@@ -5,6 +5,7 @@ import SongList from './containers/SongList'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import NavContainer from './containers/NavContainer'
+import SidebarContainer from './containers/SidebarContainer'
 import Transport from './components/Transport'
 import ShowTrack from './components/ShowTrack'
 import ShowUser from './components/ShowUser'
@@ -41,8 +42,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <NavContainer history={this.props.history} logout={this.logout} />
+        <SidebarContainer history={this.props.history} />
         <div id="main-body">
-          <NavContainer history={this.props.history} logout={this.logout} />
           <Route exact path="/" render={ (renderProps) =>
               <SongList history={ renderProps.history } songs={ this.props.songs } />
             } />

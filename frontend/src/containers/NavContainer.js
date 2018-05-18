@@ -8,7 +8,7 @@ import { logout } from '../actions/actions'
 class NavBar extends React.Component {
   render() {
     return (
-      <Navbar>
+      <Navbar fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
             <a onClick={() => this.props.history.push(`/`)}>Squall V1</a>
