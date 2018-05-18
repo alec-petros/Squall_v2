@@ -7,11 +7,19 @@ import fullHeart from '../images/fullHeart.png'
 
 class Song extends React.Component {
 
-  render() {
-    const date = this.props.song.created_at.split("T")[0]
+  handleLike = () => {
+    const favObj = this.props.favoriteList.find(fav => fav.track_id === this.props.song.id)
+    if (favObj) {
+      this.props.unlike(favObj, this.props.auth)
+      this.props.auth ? this.props.getFavorites(this.props.auth) : null
+    } else {
+      this.props.like(this.props.song, this.props.auth)
+    }
+  }
 
+  render() {
     let imgSrc
-    this.props.favoriteList.includes(this.props.song.id) ?
+    this.props.favoriteList.find(fav => fav.track_id === this.props.song.id) ?
     imgSrc = fullHeart :
     imgSrc = emptyHeart
 
@@ -27,7 +35,7 @@ class Song extends React.Component {
         </img>
         <span className="song-artist" onClick={() => {this.props.history.push(`/user/${this.props.song.artist_id}`)}}>{this.props.song.artist} - </span>
         <p className="song-meta" onClick={() => this.props.reroute(this.props.song.id)}>{this.props.song.name} </p>
-        <img className="song-like" src={imgSrc} onClick={() => {this.props.like(this.props.song, this.props.auth)}}></img>
+        <img className="song-like" src={imgSrc} onClick={this.handleLike}></img>
       </Panel>
     )
   }

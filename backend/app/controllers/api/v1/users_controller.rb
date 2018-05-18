@@ -11,10 +11,7 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/:id/favorites
   def favorites
-    favorites = @user.favorites.map do |fav|
-      fav.id
-    end
-    render json: favorites
+    render json: @user.favorites
   end
 
   # GET /users/1

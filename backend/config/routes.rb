@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :tracks
       resources :users
       get '/users/:id/favorites', to: 'users#favorites'
+      delete '/favorites/:id', to: 'favorites#delete'
       post '/favorites', to: 'favorites#create'
     end
   end

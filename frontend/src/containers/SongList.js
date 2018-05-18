@@ -2,7 +2,7 @@ import React from 'react';
 import Song from '../components/Song'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setActive, like } from '../actions/actions'
+import { setActive, like, unlike, getFavorites } from '../actions/actions'
 
 
 class SongList extends React.Component {
@@ -19,7 +19,9 @@ class SongList extends React.Component {
         <Song
           reroute={this.reroute}
           like={this.props.like}
+          unlike={this.props.unlike}
           auth={this.props.auth}
+          getFavorites={this.props.getFavorites}
           setActive={this.props.setActive}
           key={'song-comp-' + song.id}
           song={song}
@@ -45,4 +47,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setActive, like })(SongList))
+export default withRouter(connect(mapStateToProps, { setActive, like, unlike, getFavorites })(SongList))

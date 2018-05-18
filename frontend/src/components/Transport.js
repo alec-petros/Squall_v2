@@ -34,7 +34,7 @@ class Transport extends React.Component {
   }
 
   draw = () => {
-    let drawVisual = requestAnimationFrame(this.draw);
+    requestAnimationFrame(this.draw);
 
     this.audioStore.canvas.width = document.body.clientWidth
 

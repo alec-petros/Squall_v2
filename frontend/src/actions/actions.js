@@ -81,6 +81,20 @@ export function like(track, auth){
   }
 }
 
+export function unlike(favObj, auth){
+  return (dispatch) => {
+    fetch(API_URL + `api/v1/favorites/${favObj.id}`, {
+      method: "DELETE",
+      headers: {
+        ...headers,
+        "Authorization": `Token token=${ auth.token }`
+      }
+    })
+    .then(r => r.json())
+    .then(console.log)
+  }
+}
+
 export function setAuth(auth){
   return (dispatch) => {
     dispatch({

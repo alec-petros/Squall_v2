@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Uploader from './components/Uploader'
 import SongList from './containers/SongList'
@@ -13,8 +12,6 @@ import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setAuth, logout, setSongs, getFavorites } from './actions/actions'
 import {
-  BrowserRouter as Switch,
-  Redirect,
   Route
 } from 'react-router-dom';
 

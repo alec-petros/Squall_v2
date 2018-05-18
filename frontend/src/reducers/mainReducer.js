@@ -32,7 +32,10 @@ export default function shoppingListItemReducer(state = defaultState, action) {
     case 'SET_SHOW_USER':
       return {...state, showUser: action.payload}
     case 'ADD_FAV':
-      return {...state, showUser: {...state.showUser, favorites: [...state.showUser.favorites, action.payload]}}
+      return {
+        ...state,
+        favoriteList: [...state.favoriteList, action.payload.id]
+      }
     case 'SET_FAVORITES':
       return {...state, favoriteList: action.payload}
     default:
