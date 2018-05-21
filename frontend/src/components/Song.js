@@ -38,7 +38,7 @@ class Song extends React.Component {
           }
           height="50px">
         </img>
-        <span className="song-artist" onClick={() => {this.props.history.push(`/user/${this.props.song.artist_id}`)}}>{this.props.song.artist} - </span>
+        <span className="song-artist" onClick={() => {this.props.history.push(`/users/${this.props.song.artist_id}`)}}>{this.props.song.artist} - </span>
         <p className="song-meta" onClick={() => this.props.reroute(this.props.song.id)}>{this.props.song.name} </p>
         {this.props.auth ? <img className="song-like" src={imgSrc} onClick={this.handleLike}></img> : null}
       </Panel>

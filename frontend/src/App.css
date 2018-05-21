@@ -29,12 +29,17 @@
 .song-meta {
   display:inline;
   vertical-align: middle;
-  font-size: 15px;
+  color: grey;
+  font-size: 12px;
 }
 
 .song-artist {
-  font-size: 10px;
+  font-size: 15px;
   vertical-align: middle;
+}
+
+#follow-button {
+  font-size: 12px;
 }
 
 #user-tracks {

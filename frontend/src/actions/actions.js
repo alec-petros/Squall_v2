@@ -155,6 +155,19 @@ export function setSongs(songs) {
   }
 }
 
+export function setSongsStream(id) {
+  return (dispatch) => {
+    fetch(`http://localhost:3000/api/v1/users/${id}/stream`)
+    .then(r => r.json())
+    .then(json => {
+      dispatch({
+        type: "SET_SONGS",
+        payload: json
+      })
+    })
+  }
+}
+
 export function setActive(song) {
   return (dispatch) => {
     dispatch({type: "SET_ACTIVE", payload: song})
@@ -179,8 +192,49 @@ export function setShow(song) {
   }
 }
 
-export function setShowUser(user) {
+export function setShowUser(id) {
   return (dispatch) => {
-    dispatch({type: "SET_SHOW_USER", payload: user})
+    fetch(`http://localhost:3000/api/v1/users/${id}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/javascript"
+      }
+    })
+    .then(r => r.json())
+    .then(json => dispatch({type: "SET_SHOW_USER", payload: json}))
+
+  }
+}
+
+export function followArtist(id, auth) {
+  return (dispatch) => {
+    fetch(API_URL + '/api/v1/follows', {
+      method: "POST",
+      headers: {
+        ...headers,
+        "Authorization": `Token token=${ auth.token }`
+      },
+      body: JSON.stringify({follow: {id: id}})
+    })
+    .then(r => r.json())
+    .then(json => dispatch({type: "ADD_FOLLOW", payload: json}))
+  }
+}
+
+export function unfollowArtist(id, auth) {
+  return (dispatch) => {
+    fetch(API_URL + `/api/v1/follows/${id}`, {
+      method: "DELETE",
+      headers: {
+        ...headers,
+        "Authorization": `Token token=${ auth.token }`
+      }
+    })
+    .then(r => r.json())
+    .then(json => {
+      console.log(json)
+      dispatch({type: "REMOVE_FOLLOW", payload: json})
+    })
   }
 }

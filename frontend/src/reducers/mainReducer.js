@@ -6,7 +6,8 @@ const defaultState = {
   showSong: null,
   showUser: null,
   htmlAudio: null,
-  favoriteList: []
+  favoriteList: [],
+  followsList: []
 }
 
 
@@ -38,7 +39,11 @@ export default function shoppingListItemReducer(state = defaultState, action) {
     case 'REMOVE_FAV':
       return {...state, favoriteList: state.favoriteList.filter(fav => fav.id !== action.payload)}
     case 'SET_FAVORITES':
-      return {...state, favoriteList: action.payload}
+      return {...state, favoriteList: action.payload.favorites, followsList: action.payload.followed_artists}
+    case 'ADD_FOLLOW':
+      return {...state, followsList: [...state.followsList, action.payload]}
+    case 'REMOVE_FOLLOW':
+      return {...state, followsList: state.followsList.filter(f => f.id !== action.payload.id)}
     default:
       return state;
   }

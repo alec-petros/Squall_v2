@@ -8,11 +8,10 @@ import { setActive, like, unlike, getFavorites } from '../actions/actions'
 class SongList extends React.Component {
 
   reroute = (id) => {
-    this.props.history.push(`/track/${id}`)
+    this.props.history.push(`/tracks/${id}`)
   }
 
   render() {
-    console.log(this.props.songs)
     let show
     this.props.songs ?
     show = this.props.songs.map(song => {

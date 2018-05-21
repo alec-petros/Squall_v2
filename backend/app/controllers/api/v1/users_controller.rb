@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authenticate!, only: [:create, :show]
-  before_action :set_user, only: [:show, :update, :destroy, :favorites]
+  skip_before_action :authenticate!, only: [:create, :show, :stream]
+  before_action :set_user, only: [:show, :update, :destroy, :favorites, :stream]
 
   # GET /users
   def index
@@ -11,7 +11,16 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/:id/favorites
   def favorites
-    render json: @user.favorites
+    render json: @user.favorite_things
+  end
+
+  # GET /users/:id/stream
+  def stream
+    stream = []
+    stream.push(@user.tracks.map {|track| track.destructure})
+    followed_tracks = @user.followed_artists.map {|art| art.tracks.map {|track| track.destructure}}
+    stream.push(*followed_tracks)
+    render json: stream.flatten
   end
 
   # GET /users/1

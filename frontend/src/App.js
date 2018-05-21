@@ -11,7 +11,7 @@ import ShowTrack from './components/ShowTrack'
 import ShowUser from './components/ShowUser'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
-import { setAuth, logout, setSongs, getFavorites } from './actions/actions'
+import { setAuth, logout, setSongs, setSongsStream, getFavorites } from './actions/actions'
 import {
   Route
 } from 'react-router-dom';
@@ -24,8 +24,10 @@ class App extends Component {
       const auth = JSON.parse(localStorage.auth)
       this.props.setAuth(auth)
       this.props.getFavorites(auth)
+      this.props.setSongsStream(auth.user_id)
+    } else {
+      this.props.setSongs()
     }
-    this.props.setSongs()
   }
 
   authFetched = (auth) =>{
@@ -57,8 +59,8 @@ class App extends Component {
           <Route path="/login" render={ (renderProps) =>
             <LoginForm authSet={ this.authFetched } history={ renderProps.history } />
           } />
-        <Route path="/track/:id" component={ShowTrack} />
-        <Route path="/user/:id" component={ShowUser} />
+        <Route path="/tracks/:id" component={ShowTrack} />
+        <Route path="/users/:id" component={ShowUser} />
         </div>
         {
           this.props.activeSong ?
@@ -74,4 +76,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, songs: state.songs, activeSong: state.activeSong }
 }
 
-export default withRouter(connect(mapStateToProps, { setAuth, logout, setSongs, getFavorites })(App));
+export default withRouter(connect(mapStateToProps, { setAuth, logout, setSongs, setSongsStream, getFavorites })(App));

@@ -1,6 +1,8 @@
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Button from 'react-bootstrap/lib/Button'
+import { setSongs, setSongsStream } from '../actions/actions'
+import { connect } from 'react-redux'
 
 class SidebarContainer extends React.Component {
   render() {
@@ -9,7 +11,12 @@ class SidebarContainer extends React.Component {
         <ButtonGroup vertical block>
           <Button bsStyle="danger">/profile</Button>
           <Button bsStyle="danger">/streams</Button>
-          <Button bsStyle="danger">/all</Button>
+          <Button
+            bsStyle="danger"
+            onClick={() => {
+              this.props.setSongs()
+              this.props.history.push('/')
+            }}>/all</Button>
           <Button bsStyle="danger">/groups</Button>
         </ButtonGroup>
       </div>
@@ -17,4 +24,8 @@ class SidebarContainer extends React.Component {
   }
 }
 
-export default SidebarContainer
+function mapStateToProps(state) {
+  return {auth: state.auth}
+}
+
+export default connect(mapStateToProps, {setSongs, setSongsStream})(SidebarContainer)
