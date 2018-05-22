@@ -33,7 +33,7 @@ class CommentContainer extends React.Component {
           <input name="content" value={this.state.content} size="40" />
           <input type="submit" value="Save Comment" />
           <br></br><br></br>
-          <ul>
+          <ul id="comments">
             { comments }
           </ul>
         </form>

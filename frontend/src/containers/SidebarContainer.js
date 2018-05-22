@@ -9,15 +9,15 @@ class SidebarContainer extends React.Component {
     return (
       <div id="sidebar">
         <ButtonGroup vertical block>
-          <Button bsStyle="danger">/profile</Button>
-          <Button bsStyle="danger">/streams</Button>
+          <Button style={{backgroundColor: 'rgba(68, 68, 68, 255)'}} className="sidebarButton">/profile</Button>
+          <Button style={{backgroundColor: 'rgba(68, 68, 68, 255)'}} className="sidebarButton">/streams</Button>
           <Button
-            bsStyle="danger"
+            style={{backgroundColor: 'rgba(68, 68, 68, 255)'}} className="sidebarButton"
             onClick={() => {
               this.props.setSongs()
               this.props.history.push('/')
             }}>/all</Button>
-          <Button bsStyle="danger">/groups</Button>
+          <Button style={{backgroundColor: 'rgba(68, 68, 68, 255)'}} className="sidebarButton">/groups</Button>
         </ButtonGroup>
       </div>
     )

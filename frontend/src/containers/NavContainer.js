@@ -33,7 +33,7 @@ class NavBar extends React.Component {
       </Nav>
     )
     return (
-      <Navbar fixedTop>
+      <Navbar inverse fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
             <a onClick={() => {

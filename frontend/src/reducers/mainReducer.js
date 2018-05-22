@@ -2,7 +2,7 @@ const defaultState = {
   auth: null,
   songs: [],
   activeSong: null,
-  transportMode: "",
+  transportMode: "play",
   transportPlay: 'init',
   showSong: null,
   showUser: null,

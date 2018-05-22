@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  height: 100%
+  height: 100%;
 }
 
 .song {
@@ -62,7 +62,12 @@
   vertical-align: top;
 }
 
-html, body { height: 100%; width: 100%; margin: 0; }
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-color: #c1c1c1;
+}
 
 .song-date {
   font-size: 10px;
@@ -85,6 +90,7 @@ html, body { height: 100%; width: 100%; margin: 0; }
   width: 90%;
   padding-top: 40px;
   float: right;
+  background-color: #c1c1c1;
 }
 
 #sidebar {
@@ -95,6 +101,12 @@ html, body { height: 100%; width: 100%; margin: 0; }
   padding-top: 60px;
   height: 100%;
   float: left;
+  background-color: #c1c1c1;
+}
+
+.sidebarButton {
+  color: #b2b2b2;
+
 }
 
 #songList {
@@ -108,6 +120,13 @@ html, body { height: 100%; width: 100%; margin: 0; }
   text-align: left;
   float: left;
   width: 100%;
+  height: 80%;
+}
+
+#comments {
+  height: 50vh;
+  display: block;
+  overflow: scroll;
 }
 
 #editTrack {
@@ -149,8 +168,12 @@ html, body { height: 100%; width: 100%; margin: 0; }
 
 #transport-meta {
   position: fixed;
+  width: 30%;
+  padding-left: 20px;
+  color: #efefef;
+  background-color: #444444;
   z-index: 1;
-  right: 20%;
+  right: 0;
   vertical-align: middle;
 }
 
@@ -177,9 +200,4 @@ html, body { height: 100%; width: 100%; margin: 0; }
   position: absolute;
   width: 100px;
   height: 100px;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }

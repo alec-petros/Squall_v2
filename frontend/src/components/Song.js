@@ -5,7 +5,7 @@ import emptyHeart from '../images/emptyHeart.png'
 import fullHeart from '../images/fullHeart.png'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setActive, like, unlike, getFavorites } from '../actions/actions'
+import { setActive, like, unlike, getFavorites, transportClick } from '../actions/actions'
 
 class Song extends React.Component {
 
@@ -34,11 +34,12 @@ class Song extends React.Component {
     imgSrc = emptyHeart
 
     return (
-      <Panel className="song">
+      <Panel style={{backgroundColor: '#e8e8e8'}} className="song">
         <img className="song-play"
           src={play}
           onClick={() => {
               this.props.setActive(this.props.song);
+              this.props.transportMode !== "play" ? this.props.transportClick() : null
               this.props.transportPlay !== "init" ? this.props.transportPlay(this.props.song) : null
               this.play()
             }
@@ -64,4 +65,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setActive, like, unlike, getFavorites })(Song))
+export default withRouter(connect(mapStateToProps, { setActive, like, unlike, getFavorites, transportClick })(Song))

@@ -2,6 +2,7 @@ import React from 'react';
 import play from '../images/play.png'
 import pause from '../images/pause.png'
 import ReactBootstrapSlider from 'react-bootstrap-slider';
+import Panel from 'react-bootstrap/lib/Panel'
 import { connect } from 'react-redux'
 import { transportClick, setTransportPlay } from '../actions/actions'
 
@@ -38,11 +39,11 @@ class Transport extends React.Component {
     this.audioStore.htmlElement.play()
 
     this.audioStore.grd = this.audioStore.canvasCtx.createLinearGradient(0,0,this.audioStore.canvas.width,0);
-    this.audioStore.grd.addColorStop(0, 'rgba(250, 250, 250, 255)');
-    this.audioStore.grd.addColorStop(0.1, 'rgba(250, 250, 250, 255)');
-    this.audioStore.grd.addColorStop(0.5, 'rgba(250, 250, 250, 0)');
-    // grd.addColorStop(0.9, 'rgba(250, 250, 250, 255)');
-    this.audioStore.grd.addColorStop(0.6,'rgba(250, 250, 250, 255)');
+    this.audioStore.grd.addColorStop(0, 'rgba(68, 68, 68, 255)');
+    this.audioStore.grd.addColorStop(0.1, 'rgba(68, 68, 68, 255)');
+    this.audioStore.grd.addColorStop(0.5, 'rgba(68, 68, 68, 0)');
+    // grd.addColorStop(0.9, 'rgba(68, 68, 68, 255)');
+    this.audioStore.grd.addColorStop(0.6,'rgba(68, 68, 68, 255)');
 
     this.props.setTransportPlay(this.switchPlayback)
 
@@ -56,11 +57,11 @@ class Transport extends React.Component {
 
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray)
 
-    this.audioStore.canvasCtx.fillStyle = 'rgba(250, 250, 250, 255)';
+    this.audioStore.canvasCtx.fillStyle = 'rgba(68, 68, 68, 255)';
     this.audioStore.canvasCtx.fillRect(0, 0, this.audioStore.canvas.width, this.audioStore.canvas.height);
 
     this.audioStore.canvasCtx.lineWidth = 2;
-    this.audioStore.canvasCtx.strokeStyle = 'rgb(100, 0, 100)';
+    this.audioStore.canvasCtx.strokeStyle = '#efefef';
 
     this.audioStore.canvasCtx.beginPath();
 
@@ -81,7 +82,7 @@ class Transport extends React.Component {
 
       x += sliceWidth;
     }
-    this.audioStore.canvasCtx.lineTo(this.audioStore.canvas.width, this.audioStore.canvas.height/2);
+    this.audioStore.canvasCtx.lineTo(this.audioStore.canvas.width * 2/3, this.audioStore.canvas.height/2);
     this.audioStore.canvasCtx.stroke();
 
     this.audioStore.canvasCtx.fillStyle=this.audioStore.grd;
@@ -124,11 +125,11 @@ class Transport extends React.Component {
           <img onClick={this.startPlayback} id="play-button" src={play}></img> :
           <img onClick={this.stopPlayback} id="play-button" src={pause}></img>
         }
-        <div id="transport-meta">
+        <Panel id="transport-meta">
           <h4>{this.props.activeSong.artist}</h4>
           <p>{this.props.activeSong.name}</p>
           <p>({this.props.activeSong.play_count} Plays)</p>
-        </div>
+        </Panel>
         <canvas id="transport-canvas" width="800" height='100'></canvas>
       </div>
     )
