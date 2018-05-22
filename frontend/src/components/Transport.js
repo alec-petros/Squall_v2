@@ -37,6 +37,13 @@ class Transport extends React.Component {
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray);
     this.audioStore.htmlElement.play()
 
+    this.audioStore.grd = this.audioStore.canvasCtx.createLinearGradient(0,0,this.audioStore.canvas.width,0);
+    this.audioStore.grd.addColorStop(0, 'rgba(250, 250, 250, 255)');
+    this.audioStore.grd.addColorStop(0.1, 'rgba(250, 250, 250, 255)');
+    this.audioStore.grd.addColorStop(0.5, 'rgba(250, 250, 250, 0)');
+    // grd.addColorStop(0.9, 'rgba(250, 250, 250, 255)');
+    this.audioStore.grd.addColorStop(0.6,'rgba(250, 250, 250, 255)');
+
     this.props.setTransportPlay(this.switchPlayback)
 
     this.draw();
@@ -77,14 +84,7 @@ class Transport extends React.Component {
     this.audioStore.canvasCtx.lineTo(this.audioStore.canvas.width, this.audioStore.canvas.height/2);
     this.audioStore.canvasCtx.stroke();
 
-    var grd=this.audioStore.canvasCtx.createLinearGradient(0,0,this.audioStore.canvas.width,0);
-    grd.addColorStop(0, 'rgba(250, 250, 250, 255)');
-    grd.addColorStop(0.1, 'rgba(250, 250, 250, 255)');
-    grd.addColorStop(0.5, 'rgba(250, 250, 250, 0)');
-    // grd.addColorStop(0.9, 'rgba(250, 250, 250, 255)');
-    grd.addColorStop(0.6,'rgba(250, 250, 250, 255)');
-
-    this.audioStore.canvasCtx.fillStyle=grd;
+    this.audioStore.canvasCtx.fillStyle=this.audioStore.grd;
     this.audioStore.canvasCtx.fillRect(0,0,this.audioStore.canvas.width,this.audioStore.canvas.height);
   };
 

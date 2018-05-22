@@ -48,6 +48,14 @@ export default function shoppingListItemReducer(state = defaultState, action) {
       return {...state, followsList: [...state.followsList, action.payload]}
     case 'REMOVE_FOLLOW':
       return {...state, followsList: state.followsList.filter(f => f.id !== action.payload.id)}
+    case 'ADD_COMMENT':
+      return {
+        ...state,
+        showSong: {
+          ...state.showSong,
+          comments: [...state.showSong.comments, action.payload]
+        }
+      }
     default:
       return state;
   }

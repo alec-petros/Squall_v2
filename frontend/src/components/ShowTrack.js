@@ -1,6 +1,7 @@
 import React from 'react';
 import play from '../images/play.png'
 import Song from './Song'
+import CommentContainer from '../containers/CommentContainer'
 import { connect } from 'react-redux'
 import { setShow, setActive } from '../actions/actions'
 
@@ -76,6 +77,21 @@ class ShowTrack extends React.Component {
     })
   }
 
+  handleDelete = () => {
+    fetch(`http://localhost:3000/api/v1/tracks/${this.props.showSong.id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/javascript",
+        "Authorization": `Token token=${ this.props.auth.token }`
+      }
+    })
+    .then(r => r.json())
+    .then(json => {
+      this.props.history.push('/')
+    })
+  }
+
   changeMode = () => {
     if (this.state.mode !== "show") {
       this.setState({
@@ -89,7 +105,6 @@ class ShowTrack extends React.Component {
   }
 
   render() {
-    console.log(this.props.showSong)
     let show = null
     if (this.state.mode === 'show') {
       this.props.showSong ?
@@ -98,6 +113,7 @@ class ShowTrack extends React.Component {
           <Song song={this.props.showSong} />
           {this.props.showSong.owner === true ? <button onClick={this.changeMode}>Edit Song</button> : null}
           <h4 id="showDesc">{this.props.showSong.artist} says: '{this.props.showSong.description}'</h4>
+          <CommentContainer history={this.props.history} song={this.props.showSong} />
         </div>
       ) :
       null
@@ -112,8 +128,9 @@ class ShowTrack extends React.Component {
             <label>Description:</label><br></br>
             <textarea rows="10" name="description" value={this.state.description} />
             <br></br>
-            <button type="submit">Submit Changes</button>
+            <button type="submit">Submit Changes</button><br></br>
           </form>
+          <button onClick={this.handleDelete}>Delete</button>
         </div>
       ) :
       null

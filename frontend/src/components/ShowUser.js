@@ -22,7 +22,7 @@ class ShowUser extends React.Component {
       <div id="showDiv">
         <h1>{this.props.showUser.name}</h1>
         {
-          this.props.showUser.id !== this.props.auth.user_id ?
+          this.props.auth && this.props.showUser.id !== this.props.auth.user_id ?
             follow ?
             <Button onClick={() => this.props.unfollowArtist(follow.id, this.props.auth)} id="follow-button">Unfollow</Button> :
             <Button onClick={() => this.props.followArtist(this.props.showUser.id, this.props.auth)} id="follow-button">Follow</Button>
