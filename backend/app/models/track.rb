@@ -11,7 +11,7 @@ class Track < ApplicationRecord
     {
       id: self.id,
       name: self.name,
-      artist: self.user.name,
+      artist: self.user.username,
       artist_id: self.user_id,
       url: self.url,
       play_count: self.play_count,

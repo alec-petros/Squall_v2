@@ -43,6 +43,7 @@ class Api::V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.name = @user.username
 
     if @user.save
       render json: user_hash(@user)

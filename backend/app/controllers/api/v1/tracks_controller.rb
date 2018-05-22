@@ -14,7 +14,7 @@ class Api::V1::TracksController < ApplicationController
   end
 
   def play
-    @track.play_count === nil ? @track.play_count = 0 : null
+    @track.play_count === nil ? @track.play_count = 0 : nil
     @track.play_count += 1
     @track.save
   end

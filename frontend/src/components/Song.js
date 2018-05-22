@@ -33,6 +33,7 @@ class Song extends React.Component {
           src={play}
           onClick={() => {
               this.props.setActive(this.props.song);
+              this.props.transportMode == "play" ? this.props.play() : null;
               this.play()
             }
           }

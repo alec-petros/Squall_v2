@@ -28,7 +28,7 @@ class Api::V1::AudioFilesController < ApplicationController
         })
       if @audio_file.save
         @audio_file.filestack_upload
-        render json: @track
+        render json: @track.destructure
       else
         render json: @audio_file.errors, status: :unprocessable_entity
       end

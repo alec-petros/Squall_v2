@@ -13,6 +13,7 @@ class SongList extends React.Component {
 
   render() {
     let show
+    console.log(this.props.songs)
     this.props.songs ?
     show = this.props.songs.map(song => {
       return (
@@ -23,6 +24,8 @@ class SongList extends React.Component {
           auth={this.props.auth}
           getFavorites={this.props.getFavorites}
           setActive={this.props.setActive}
+          play={this.props.transportPlay}
+          transportMode={this.props.transportMode}
           key={'song-comp-' + song.id}
           song={song}
           favoriteList={this.props.favoriteList}
@@ -43,7 +46,9 @@ function mapStateToProps(state) {
   return {
     activeSong: state.activeSong,
     auth: state.auth,
-    favoriteList: state.favoriteList
+    favoriteList: state.favoriteList,
+    transportPlay: state.transportPlay,
+    transportMode: state.transportMode
   }
 }
 

@@ -174,6 +174,12 @@ export function setActive(song) {
   }
 }
 
+export function setTransportPlay(func) {
+  return (dispatch) => {
+    dispatch({type: "SET_TRANSPORT_PLAY", payload: func})
+  }
+}
+
 export function transportClick() {
   return (dispatch) => {
     dispatch({type: 'TRANSPORT_CLICK', payload: null})

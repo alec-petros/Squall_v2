@@ -3,7 +3,7 @@ import play from '../images/play.png'
 import pause from '../images/pause.png'
 // import ReactBootstrapSlider from 'react-bootstrap-slider';
 import { connect } from 'react-redux'
-import {transportClick} from '../actions/actions'
+import { transportClick, setTransportPlay } from '../actions/actions'
 
 class Transport extends React.Component {
 
@@ -32,6 +32,9 @@ class Transport extends React.Component {
 
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray);
     this.audioStore.htmlElement.play()
+
+    this.props.setTransportPlay(this.startPlayback)
+
     this.draw();
   }
 
@@ -104,4 +107,4 @@ function mapPoopToProps(state) {
   return {activeSong: state.activeSong, transportMode: state.transportMode}
 }
 
-export default connect(mapPoopToProps, {transportClick})(Transport)
+export default connect(mapPoopToProps, { transportClick, setTransportPlay })(Transport)
