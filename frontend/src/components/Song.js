@@ -1,14 +1,20 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom'
 import Panel from 'react-bootstrap/lib/Panel'
 import play from '../images/play.png'
 import emptyHeart from '../images/emptyHeart.png'
 import fullHeart from '../images/fullHeart.png'
+import {withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setActive, like, unlike, getFavorites } from '../actions/actions'
 
 class Song extends React.Component {
 
   play = () => {
     fetch(`http://localhost:3000/api/v1/tracks/${this.props.song.id}/play`)
+  }
+
+  reroute = () => {
+    this.props.history.push(`/tracks/${this.props.song.id}`)
   }
 
   handleLike = () => {
@@ -33,18 +39,29 @@ class Song extends React.Component {
           src={play}
           onClick={() => {
               this.props.setActive(this.props.song);
-              this.props.transportMode == "play" ? this.props.play() : null;
+              this.props.transportPlay !== "init" ? this.props.transportPlay(this.props.song) : null
               this.play()
             }
           }
           height="50px">
         </img>
         <span className="song-artist" onClick={() => {this.props.history.push(`/users/${this.props.song.artist_id}`)}}>{this.props.song.artist} - </span>
-        <p className="song-meta" onClick={() => this.props.reroute(this.props.song.id)}>{this.props.song.name} </p>
+        <p className="song-meta" onClick={this.reroute}>{this.props.song.name} </p>
+        <p className="song-playcount">    ({this.props.song.play_count} Plays)</p>
         {this.props.auth ? <img className="song-like" src={imgSrc} onClick={this.handleLike}></img> : null}
       </Panel>
     )
   }
 }
 
-export default withRouter(Song)
+function mapStateToProps(state) {
+  return {
+    activeSong: state.activeSong,
+    auth: state.auth,
+    favoriteList: state.favoriteList,
+    transportPlay: state.transportPlay,
+    transportMode: state.transportMode
+  }
+}
+
+export default withRouter(connect(mapStateToProps, { setActive, like, unlike, getFavorites })(Song))

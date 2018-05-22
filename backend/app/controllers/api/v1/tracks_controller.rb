@@ -21,7 +21,11 @@ class Api::V1::TracksController < ApplicationController
 
   # GET /tracks/1
   def show
-    render json: @track
+    if current_user_id === @track.user.id
+      render json: @track.owner_destructure
+    else
+      render json: @track.destructure
+    end
   end
 
   # POST /tracks

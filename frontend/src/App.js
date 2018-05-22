@@ -19,7 +19,7 @@ import {
 
 class App extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     if (localStorage.auth) {
       const auth = JSON.parse(localStorage.auth)
       this.props.setAuth(auth)

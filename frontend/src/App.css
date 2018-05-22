@@ -38,6 +38,14 @@
   vertical-align: middle;
 }
 
+.song-playcount {
+  font-size: 9px;
+  display: inline;
+  vertical-align: middle;
+  text-align: right;
+  color: lightgrey;
+}
+
 #follow-button {
   font-size: 12px;
 }
@@ -96,12 +104,24 @@ html, body { height: 100%; width: 100%; margin: 0; }
 #showDiv {
   display: inline-block;
   padding: 20px;
+  font-size: 14px;
+  text-align: left;
   float: left;
   width: 100%;
 }
 
+#editTrack {
+  font-size: 18px;
+}
+
+#editForm {
+  position: absolute;
+  width: 80%;
+}
+
 #showName {
   display: inline-block;
+  vertical-align: middle;
 }
 
 #showDesc {
@@ -125,6 +145,20 @@ html, body { height: 100%; width: 100%; margin: 0; }
   height: 100px;
   width: 100%;
   text-align: left;
+}
+
+#transport-meta {
+  position: fixed;
+  z-index: 1;
+  right: 20%;
+  vertical-align: middle;
+}
+
+.vol-slider {
+  position: fixed;
+  float: right;
+  right: 0px;
+  z-index: 1;
 }
 
 #vol-control {

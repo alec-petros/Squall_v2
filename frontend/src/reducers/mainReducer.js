@@ -3,7 +3,7 @@ const defaultState = {
   songs: [],
   activeSong: null,
   transportMode: "",
-  transportPlay: null,
+  transportPlay: 'init',
   showSong: null,
   showUser: null,
   htmlAudio: null,
@@ -23,6 +23,7 @@ export default function shoppingListItemReducer(state = defaultState, action) {
     case 'SET_ACTIVE':
       return {...state, activeSong: action.payload}
     case 'SET_TRANSPORT_PLAY':
+      console.log('action', action)
       return {...state, transportPlay: action.payload}
     case 'TRANSPORT_CLICK':
       let mode = null
