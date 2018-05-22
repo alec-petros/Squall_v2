@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/lib/Button'
 
 class ShowUser extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.setShowUser(this.props.match.params.id)
     // console.log(this.props.match.params.id)
   }

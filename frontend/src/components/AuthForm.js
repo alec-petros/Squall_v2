@@ -7,6 +7,7 @@ class AuthForm extends React.Component {
   DEFAULT_STATE = {
     username: "",
     password: "",
+    email: "",
     errors: []
   }
   state = this.DEFAULT_STATE
@@ -21,26 +22,6 @@ class AuthForm extends React.Component {
     this.props.history.push('/')
   }
 
-  // doFetch(auth) {
-  //   fetch(this.props.url, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/javascript"
-  //     },
-  //     body: JSON.stringify(auth)
-  //   }).then((resp) => resp.json())
-  //   .then((data) => {
-  //       if (data.errors) {
-  //         this.setState({ errors: data.errors })
-  //       } else {
-  //         this.setState({ ...this.DEFAULT_STATE })
-  //         this.props.authSet(data)
-  //         this.props.history.push('/')
-  //       }
-  //     })
-  // }
-
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -54,8 +35,8 @@ class AuthForm extends React.Component {
   }
 
   render(){
-    return (<div>
-      { this.state.errors.length ? this.errors() : "" }
+
+    const registerInputs=(
       <form onSubmit={ this.handleSubmit }>
         <label htmlFor="username">Username</label>
         <input type="text" onChange={ this.handleChange }
@@ -67,8 +48,39 @@ class AuthForm extends React.Component {
                            value={ this.state.password }
                            name="password"
                            id="password" /><br></br>
+        <label htmlFor="email">Email</label>
+        <input type="text" onChange={ this.handleChange }
+                           value={ this.state.email }
+                           name="email"
+                           id="email" /><br></br>
+         <label htmlFor="name">Display Name</label>
+         <input type="text" onChange={ this.handleChange }
+                            value={ this.state.name }
+                            name="name"
+                            id="name" /><br></br>
         <input type="submit" />
       </form>
+    )
+
+    return (<div>
+      { this.state.errors.length ? this.errors() : "" }
+      {
+        this.props.mode === "login" ?
+        <form onSubmit={ this.handleSubmit }>
+          <label htmlFor="username">Username</label>
+          <input type="text" onChange={ this.handleChange }
+            value={ this.state.username }
+            name="username"
+            id="username" /><br></br>
+          <label htmlFor="password">Password</label>
+          <input type="password" onChange={ this.handleChange }
+            value={ this.state.password }
+            name="password"
+            id="password" /><br></br>
+          <input type="submit" />
+        </form> :
+        registerInputs
+      }
     </div>)
   }
 }

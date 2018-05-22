@@ -3,6 +3,8 @@ import play from '../images/play.png'
 import pause from '../images/pause.png'
 import ReactBootstrapSlider from 'react-bootstrap-slider';
 import Panel from 'react-bootstrap/lib/Panel'
+import Slider from 'react-rangeslider'
+import 'react-rangeslider/lib/index.css'
 import { connect } from 'react-redux'
 import { transportClick, setTransportPlay } from '../actions/actions'
 
@@ -19,6 +21,7 @@ class Transport extends React.Component {
 
   componentDidMount() {
     this.audioStore.analyser = this.audioStore.audioCtx.createAnalyser();
+    this.audioStore.gainNode = this.audioStore.audioCtx.createGain()
     this.audioStore.canvas = document.getElementById("transport-canvas")
     this.audioStore.canvasCtx = this.audioStore.canvas.getContext('2d')
 
@@ -29,7 +32,8 @@ class Transport extends React.Component {
     this.audioStore.htmlElement.src = this.props.activeSong.url
     this.audioStore.source = this.audioStore.audioCtx.createMediaElementSource(this.audioStore.htmlElement);
     this.audioStore.source.connect(this.audioStore.analyser);
-    this.audioStore.analyser.connect(this.audioStore.audioCtx.destination);
+    this.audioStore.analyser.connect(this.audioStore.gainNode);
+    this.audioStore.gainNode.connect(this.audioStore.audioCtx.destination)
 
     this.audioStore.analyser.fftSize = 2048;
     this.audioStore.bufferLength = this.audioStore.analyser.frequencyBinCount;
@@ -89,8 +93,8 @@ class Transport extends React.Component {
     this.audioStore.canvasCtx.fillRect(0,0,this.audioStore.canvas.width,this.audioStore.canvas.height);
   };
 
-  changeValue = (e) => {
-    console.log(e)
+  changeValue = (val) => {
+    this.setState({vol: val})
   }
 
   switchPlayback = (song) => {
@@ -125,6 +129,11 @@ class Transport extends React.Component {
           <img onClick={this.startPlayback} id="play-button" src={play}></img> :
           <img onClick={this.stopPlayback} id="play-button" src={pause}></img>
         }
+        <Slider
+          className="volSlider"
+          value={this.state.vol}
+          onChange={this.changeValue}
+          />
         <Panel id="transport-meta">
           <h4>{this.props.activeSong.artist}</h4>
           <p>{this.props.activeSong.name}</p>
@@ -136,8 +145,8 @@ class Transport extends React.Component {
   }
 }
 
-function mapPoopToProps(state) {
+function mapStateToProps(state) {
   return {activeSong: state.activeSong, transportMode: state.transportMode}
 }
 
-export default connect(mapPoopToProps, { transportClick, setTransportPlay })(Transport)
+export default connect(mapStateToProps, { transportClick, setTransportPlay })(Transport)

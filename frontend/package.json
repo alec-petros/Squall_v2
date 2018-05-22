@@ -12,6 +12,7 @@
     "react-bootstrap-slider": "^2.1.5",
     "react-dom": "^16.3.2",
     "react-jinke-music-player": "^3.4.1",
+    "react-rangeslider": "^2.2.0",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",

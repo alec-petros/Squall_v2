@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   height: 100%;
+  font-family: 'Ubuntu Mono', monospace;
+
 }
 
 .song {
@@ -94,6 +96,7 @@ html, body {
 }
 
 #sidebar {
+  font-family: 'Share Tech Mono', monospace;
   position: fixed;
   left: 0;
   display: inline-block;
@@ -111,6 +114,9 @@ html, body {
 
 #songList {
   padding: 20px;
+  border-color: rgb(170, 170, 170);
+  border-style: solid;
+  border-width: 2px;
 }
 
 #showDiv {
@@ -164,6 +170,16 @@ html, body {
   height: 100px;
   width: 100%;
   text-align: left;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+#transport-canvas {
+  position: fixed;
+  bottom: 0px;
+  height: 100px;
+  width: 100%;
+  text-align: left;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 #transport-meta {
@@ -177,10 +193,10 @@ html, body {
   vertical-align: middle;
 }
 
-.vol-slider {
-  position: fixed;
-  float: right;
+.volSlider {
+  position: absolute;
   right: 0px;
+  width: 400px;
   z-index: 1;
 }
 
@@ -196,8 +212,16 @@ html, body {
   text-align: left;
 }
 
+.navStuff {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+#navbarLogo {
+  font-family: 'Share Tech Mono', monospace;
+}
+
 #play-button {
-  position: absolute;
+  position: fixed;
   width: 100px;
   height: 100px;
 }

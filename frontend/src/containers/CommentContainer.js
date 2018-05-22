@@ -18,6 +18,7 @@ class CommentContainer extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.postComment(this.props.song.id, this.state.content, this.props.auth)
+    this.setState({content: ""})
   }
 
   handleDelete = (id) => {
