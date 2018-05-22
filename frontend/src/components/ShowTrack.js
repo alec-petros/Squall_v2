@@ -13,6 +13,16 @@ class ShowTrack extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData()
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  fetchData = () => {
     let headers
     if (this.props.auth) {
       headers =  {
@@ -36,10 +46,46 @@ class ShowTrack extends React.Component {
     .then(json => {
       this.props.setShow(json);
       this.setState({
+        mode: "show",
         name: json.name,
         description: json.description
       })
     })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    fetch(`http://localhost:3000/api/v1/tracks/${this.props.showSong.id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": "application/javascript",
+        "Authorization": `Token token=${ this.props.auth.token }`
+      },
+      body: JSON.stringify({
+        track: {
+          name: this.state.name,
+          description: this.state.description
+        }
+      })
+    })
+    .then(r => r.json())
+    .then(json => {
+      this.props.setShow(json)
+      this.setState({mode: "show"})
+    })
+  }
+
+  changeMode = () => {
+    if (this.state.mode !== "show") {
+      this.setState({
+        mode: "show"
+      })
+    } else {
+      this.setState({
+        mode: "edit"
+      })
+    }
   }
 
   render() {
@@ -50,7 +96,7 @@ class ShowTrack extends React.Component {
       show = (
         <div id="showDiv">
           <Song song={this.props.showSong} />
-          {this.props.showSong.owner === true ? <button>Edit Song</button> : null}
+          {this.props.showSong.owner === true ? <button onClick={this.changeMode}>Edit Song</button> : null}
           <h4 id="showDesc">{this.props.showSong.artist} says: '{this.props.showSong.description}'</h4>
         </div>
       ) :
@@ -60,11 +106,11 @@ class ShowTrack extends React.Component {
       show = (
         <div id="editTrack">
           <Song song={this.props.showSong} />
-          <form id="editForm" onChange={this.handleChange}>
+          <form id="editForm" onChange={this.handleChange} onSubmit={this.handleSubmit}>
             <label>Name:</label><br></br>
-            <input type="text" value={this.state.name} placeholder="Song Name" /><br></br>
+            <input type="text" name="name" value={this.state.name} placeholder="Song Name" /><br></br>
             <label>Description:</label><br></br>
-            <textarea rows="10" value={this.state.description} />
+            <textarea rows="10" name="description" value={this.state.description} />
             <br></br>
             <button type="submit">Submit Changes</button>
           </form>

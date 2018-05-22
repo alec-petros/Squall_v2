@@ -42,7 +42,7 @@ class Api::V1::TracksController < ApplicationController
   # PATCH/PUT /tracks/1
   def update
     if @track.update(track_params)
-      render json: @track
+      render json: @track.owner_destructure
     else
       render json: @track.errors, status: :unprocessable_entity
     end
