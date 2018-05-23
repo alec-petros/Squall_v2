@@ -222,6 +222,7 @@ html, body {
 
 #play-button {
   position: fixed;
+  z-index: 1;
   width: 100px;
   height: 100px;
 }

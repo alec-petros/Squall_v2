@@ -12,7 +12,9 @@ class Transport extends React.Component {
 
   state = {
     activeSong: null,
-    vol: 100
+    vol: 100,
+    duration: null,
+    location: null
   }
 
   audioStore = {
@@ -30,6 +32,17 @@ class Transport extends React.Component {
     this.audioStore.htmlElement.id = "transport-audio"
     this.audioStore.htmlElement.crossOrigin = "anonymous"
     this.audioStore.htmlElement.src = this.props.activeSong.url
+
+    this.audioStore.htmlElement.onloadedmetadata = () => {
+      this.setState({
+        duration: this.audioStore.htmlElement.duration,
+        location: this.audioStore.htmlElement.currentTime
+      })
+    }
+
+    this.audioStore.interval = setInterval(() => {this.setState({location: this.state.location += 1})}, 1000)
+
+
     this.audioStore.source = this.audioStore.audioCtx.createMediaElementSource(this.audioStore.htmlElement);
     this.audioStore.source.connect(this.audioStore.analyser);
     this.audioStore.analyser.connect(this.audioStore.gainNode);
@@ -69,7 +82,6 @@ class Transport extends React.Component {
 
     this.audioStore.canvasCtx.beginPath();
 
-
     var sliceWidth = this.audioStore.canvas.width * 1.0 / this.audioStore.bufferLength;
     var x = 27;
 
@@ -103,6 +115,16 @@ class Transport extends React.Component {
     this.audioStore.htmlElement.id = "transport-audio"
     this.audioStore.htmlElement.crossOrigin = "anonymous"
     this.audioStore.htmlElement.src = song.url
+
+    this.audioStore.interval = setInterval(() => {this.setState({location: this.state.location += 1})}, 1000)
+
+    this.audioStore.htmlElement.onloadedmetadata = () => {
+      this.setState({
+        duration: this.audioStore.htmlElement.duration,
+        location: this.audioStore.htmlElement.currentTime
+      })
+    }
+
     this.audioStore.source = this.audioStore.audioCtx.createMediaElementSource(this.audioStore.htmlElement);
     this.audioStore.source.connect(this.audioStore.analyser);
     this.audioStore.htmlElement.play()
@@ -111,17 +133,29 @@ class Transport extends React.Component {
   startPlayback = () => {
     this.audioStore.htmlElement.crossOrigin = "anonymous";
     this.audioStore.htmlElement.play()
+    this.audioStore.interval = setInterval(() => {this.setState({location: this.state.location += 1})}, 1000)
     this.props.transportClick()
   }
 
 
   stopPlayback = () => {
     this.audioStore.htmlElement.pause()
+    clearInterval(this.audioStore.interval)
     this.props.transportClick()
   }
 
 
   render() {
+
+
+    const slider = (
+      <Slider
+        className="volSlider"
+        value={this.state.vol}
+        onChange={this.changeValue}
+        />
+    )
+
     return (
       <div  id="transport">
         {
@@ -129,14 +163,9 @@ class Transport extends React.Component {
           <img onClick={this.startPlayback} id="play-button" src={play}></img> :
           <img onClick={this.stopPlayback} id="play-button" src={pause}></img>
         }
-        <Slider
-          className="volSlider"
-          value={this.state.vol}
-          onChange={this.changeValue}
-          />
         <Panel id="transport-meta">
           <h4>{this.props.activeSong.artist}</h4>
-          <p>{this.props.activeSong.name}</p>
+          <p>{this.props.activeSong.name} ({this.state.location} Seconds / {Math.floor(this.state.duration / 60)} Minutes)</p>
           <p>({this.props.activeSong.play_count} Plays)</p>
         </Panel>
         <canvas id="transport-canvas" width="800" height='100'></canvas>
