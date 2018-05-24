@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
 import grid from '../../images/grid.png'
+import Box from './Box'
 
 class Simple extends React.Component {
   constructor(props, context) {
@@ -13,8 +14,12 @@ class Simple extends React.Component {
     // React will think that things have changed when they have not.
     this.cameraPosition = new THREE.Vector3(0, 0, 5);
     this.extrudePosition = new THREE.Vector3(0, 0, -175)
-    this.wavePosition = new THREE.Vector3(0, 0, -140)
+    this.mtnPos = new THREE.Vector3(0, 0, -999)
+    this.wavePosition = new THREE.Vector3(-80, -130, -500)
     this.floorPosition = new THREE.Vector3(0, -200, -100)
+    let point = new THREE.Vector3(0, 0, 0)
+    this.wirePoints = [new THREE.Vector3(30, 0, -10), new THREE.Vector3(30, 50, 0), new THREE.Vector3(-20, 30, 0), new THREE.Vector3(10, 0, 20), new THREE.Vector3(-30, 10, 14), new THREE.Vector3(30, 0, -10)]
+    this.wirePos = new THREE.Vector3(0, 0, -100)
 
     this.state = {
       cubeRotation: new THREE.Euler(),
@@ -33,12 +38,12 @@ class Simple extends React.Component {
         } else {
           tempRms = this.state.rms - 1
         }
-        let spacing = window.innerWidth/this.props.dataArray().length
+        let spacing = (window.innerWidth/this.props.dataArray().length) * 1.5
         let x = -(window.innerWidth / 2)
         const data = this.props.dataArray()
         let arr = []
         for (let i = 0; i < data.length; i++) {
-          arr.push(new THREE.Vector3(x += spacing, -200 + data[i], 0))
+          arr.push(new THREE.Vector3(x += spacing, data[i], 0))
         }
         this.setState({
           cubeRotation: new THREE.Euler(
@@ -59,6 +64,13 @@ class Simple extends React.Component {
           ),
         });
       }
+      let z = 1
+      this.wirePoints = this.wirePoints.map(point => {
+        console.log(this.wirePoints)
+        let int = Math.random()
+        int >= 0.5 ? z++ : z--
+        return new THREE.Vector3(point.x + z, point.y + z, point.z + z)
+      })
       // pretend cubeRotation is immutable.
       // this helps with updates and pure rendering.
       // React will be sure that the rotation has now updated.
@@ -69,8 +81,8 @@ class Simple extends React.Component {
     const width = window.innerWidth; // canvas width
     const height = window.innerHeight; // canvas height
     const lightPos = new THREE.Vector3(20, 0, 0)
-    const otherLightPos = new THREE.Vector3(0, 50, -200)
-    const otherLightRot = new THREE.Euler(180, 90, 0)
+    const otherLightPos = new THREE.Vector3(0, 0, 0)
+    const otherLightRot = new THREE.Euler(51, 60, 0)
     const sphereMaterial = new THREE.MeshLambertMaterial({
         color: 0xCC0000
       });
@@ -88,14 +100,14 @@ class Simple extends React.Component {
       <scene>
         <pointLight
           position={lightPos}
-         />
+          />
        <spotLight
          position={otherLightPos}
          rotation={otherLightRot}
          />
         <perspectiveCamera
           name="camera"
-          fov={75}
+          fov={80}
           aspect={width / height}
           near={0.1}
           far={1000}
@@ -114,42 +126,77 @@ class Simple extends React.Component {
           blending={THREE.MultiplyBlending}
           />
       </line>
-        <mesh
-          position={this.extrudePosition}
-          >
-          <extrudeGeometry
-            steps={5}
-            amount={16}
-            bevelEnabled={true}
-            bevelThickness={1}
-            bevelSize={4}
-            bevelSegments={4}>
-            <shape>
-              <moveTo
-                x={-(width / 2)}
-                y={200-this.state.rms}
-                />
-              <lineTo
-                x={(width / 2)}
-                y={200-this.state.rms}
-                />
-              <lineTo
-                x={(width / 2)}
-                y={130}
-                />
-              <lineTo
-                x={-(width / 2)}
-                y={130}
-                />
-              <lineTo
-                x={-(width / 2)}
-                y={200-this.state.rms}
-                />
-            </shape>
+      <mesh
+        position={this.mtnPos}
+        >
+        <extrudeGeometry
+          steps={5}
+          amount={16}
+          bevelEnabled={true}
+          bevelThickness={1}
+          bevelSize={4}
+          bevelSegments={4}>
+          <shape>
+            <moveTo
+              x={-1200}
+              y={-250}
+              />
+            <lineTo
+              x={-1200}
+              y={470 - (this.state.rms / 10)}
+              />
+            <lineTo
+              x={-1000}
+              y={140}
+              />
+            <lineTo
+              x={-860}
+              y={300 - (this.state.rms / 10)}
+              />
+            <lineTo
+              x={-650}
+              y={60}
+              />
+            <lineTo
+              x={-430}
+              y={420 - (this.state.rms / 10)}
+              />
+            <lineTo
+              x={-110}
+              y={-100}
+              />
+            <lineTo
+              x={0}
+              y={-160}
+              />
+            <lineTo
+              x={300}
+              y={560 - (this.state.rms / 10)}
+              />
+            <lineTo
+              x={650}
+              y={60}
+              />
+            <lineTo
+              x={800}
+              y={300 - (this.state.rms / 10)}
+              />
+            <lineTo
+              x={1200}
+              y={60}
+              />
+            <lineTo
+              x={1200}
+              y={-250}
+              />
+            <lineTo
+              x={-1200}
+              y={-250}
+              />
+          </shape>
           </extrudeGeometry>
           <meshLambertMaterial
-            emissive="#600080"
-            color={0x00ff00}
+            color={'#290059'}
           />
         </mesh>
         <mesh
@@ -161,27 +208,41 @@ class Simple extends React.Component {
             depth={this.state.rms / 128}
           />
           <meshLambertMaterial
-            emissive="#600080"
-            color={0x00ff00}
+            emissive="#006b67"
+            color={'#e5e5e5'}
           />
         </mesh>
+        <line
+          position={this.wirePos}
+          name="wireframe"
+          >
+          <geometry
+            vertices={this.wirePoints}>
+          </geometry>
+          <lineBasicMaterial
+            color={'#e5e5e5'}
+            />
+        </line>
         <mesh
           position={this.floorPosition}
           name="floor"
         >
           <boxGeometry
-            width={2500}
+            width={3000}
             height={1}
             depth={2000}
           />
-        <meshBasicMaterial>
+        <meshLambertMaterial>
           <texture
             url={grid}
             minFilter={THREE.NearestFilter}
-            repeat={new THREE.Vector2(4, 3)}
-            offset={new THREE.Vector2(-1, -1)}
+            repeat={new THREE.Vector2(1, 2)}
+            offset={new THREE.Vector2(0, -1)}
+            alphaTest={0.5}
+            side={THREE.DoubleSide}
+            depthWrite={false}
              />
-          </meshBasicMaterial>
+         </meshLambertMaterial>
         </mesh>
       </scene>
     </React3>);
