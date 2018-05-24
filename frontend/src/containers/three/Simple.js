@@ -15,21 +15,28 @@ class Simple extends React.Component {
 
     this.state = {
       cubeRotation: new THREE.Euler(),
-      cubeSize: 0
+      cubeSize: 0,
+      rms: 0
     };
 
     this._onAnimate = () => {
       // we will get this callback every frame
 
       if (this.props.dataArray) {
-        console.log(this.props.dataArray()[100])
+        let tempRms
+        if (Math.abs(this.props.dataArray()[5]) > this.state.rms) {
+          tempRms = (this.state.rms * 3 + Math.abs(this.props.dataArray()[5])) / 4
+        } else {
+          tempRms = this.state.rms - 1
+        }
         this.setState({
           cubeRotation: new THREE.Euler(
-            this.state.cubeRotation.x + 0.01,
-            this.state.cubeRotation.y + 0.01,
+            this.state.cubeRotation.x + 0.003,
+            this.state.cubeRotation.y + 0.003,
             0
           ),
-          cubeSize: this.props.dataArray()[100] + (this.state.cubeSize * 4) / 5
+          cubeSize: (this.props.dataArray()[5] + (this.state.cubeSize * 10))/ 11,
+          rms: tempRms
         });
       } else {
         this.setState({
@@ -87,11 +94,11 @@ class Simple extends React.Component {
           <shape>
             <moveTo
               x={-(width / 2)}
-              y={129-this.state.cubeSize / 8}
+              y={200-this.state.rms}
               />
             <lineTo
               x={(width / 2)}
-              y={129-this.state.cubeSize / 8}
+              y={200-this.state.rms}
               />
             <lineTo
               x={(width / 2)}
@@ -103,7 +110,7 @@ class Simple extends React.Component {
               />
             <lineTo
               x={-(width / 2)}
-              y={129-this.state.cubeSize / 8}
+              y={200-this.state.rms}
               />
           </shape>
         </extrudeGeometry>
@@ -116,9 +123,9 @@ class Simple extends React.Component {
           rotation={this.state.cubeRotation}
         >
           <boxGeometry
-            width={this.state.cubeSize / 256}
-            height={this.state.cubeSize / 256}
-            depth={this.state.cubeSize / 256}
+            width={this.state.rms / 128}
+            height={this.state.rms / 128}
+            depth={this.state.rms / 128}
           />
           <meshLambertMaterial
             emissive="#600080"

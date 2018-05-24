@@ -16,6 +16,8 @@
     "react-pixi": "^0.9.16",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "react-three-renderer": "^3.2.4",
     "redux": "^4.0.0",

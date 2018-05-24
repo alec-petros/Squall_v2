@@ -23,6 +23,7 @@ class Transport extends React.Component {
 
   componentDidMount() {
     this.audioStore.analyser = this.audioStore.audioCtx.createAnalyser();
+    this.audioStore.analyser.smoothingTimeConstant = 1
     this.audioStore.gainNode = this.audioStore.audioCtx.createGain()
     this.audioStore.canvas = document.getElementById("transport-canvas")
     this.audioStore.canvasCtx = this.audioStore.canvas.getContext('2d')
