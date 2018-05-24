@@ -25,7 +25,12 @@ class SidebarContainer extends React.Component {
               this.props.setSongs()
               this.props.history.push('/')
             }}>/all</Button>
-          <Button style={{backgroundColor: 'rgba(68, 68, 68, 255)'}} className="sidebarButton">/groups</Button>
+            <Button
+              style={{backgroundColor: 'rgba(68, 68, 68, 255)'}}
+              className="sidebarButton"
+              onClick={() => {
+                this.props.history.push('/simple')
+              }}>/groups</Button>
         </ButtonGroup>
       </div>
     )

@@ -1,12 +1,12 @@
 import React from 'react';
 import play from '../images/play.png'
 import pause from '../images/pause.png'
-import ReactBootstrapSlider from 'react-bootstrap-slider';
 import Panel from 'react-bootstrap/lib/Panel'
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import { connect } from 'react-redux'
 import { transportClick, setTransportPlay } from '../actions/actions'
+import {storeFFTData} from '../actions/contentActions'
 
 class Transport extends React.Component {
 
@@ -52,6 +52,8 @@ class Transport extends React.Component {
     this.audioStore.bufferLength = this.audioStore.analyser.frequencyBinCount;
     this.audioStore.dataArray = new Uint8Array(this.audioStore.bufferLength);
 
+    this.props.storeFFTData(this.dataArray)
+
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray);
     this.audioStore.htmlElement.play()
 
@@ -74,36 +76,43 @@ class Transport extends React.Component {
 
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray)
 
-    this.audioStore.canvasCtx.fillStyle = 'rgba(68, 68, 68, 255)';
-    this.audioStore.canvasCtx.fillRect(0, 0, this.audioStore.canvas.width, this.audioStore.canvas.height);
+    if (this.state.mode === "transport") {
+      this.audioStore.canvasCtx.fillStyle = 'rgba(68, 68, 68, 255)';
+      this.audioStore.canvasCtx.fillRect(0, 0, this.audioStore.canvas.width, this.audioStore.canvas.height);
 
-    this.audioStore.canvasCtx.lineWidth = 2;
-    this.audioStore.canvasCtx.strokeStyle = '#efefef';
+      this.audioStore.canvasCtx.lineWidth = 2;
+      this.audioStore.canvasCtx.strokeStyle = '#efefef';
 
-    this.audioStore.canvasCtx.beginPath();
+      this.audioStore.canvasCtx.beginPath();
 
-    var sliceWidth = this.audioStore.canvas.width * 1.0 / this.audioStore.bufferLength;
-    var x = 27;
+      var sliceWidth = this.audioStore.canvas.width * 1.0 / this.audioStore.bufferLength;
+      var x = 27;
 
-    for(var i = 0; i < this.audioStore.bufferLength; i++) {
+      for(var i = 0; i < this.audioStore.bufferLength; i++) {
 
-      var v = this.audioStore.dataArray[i] / 128.0;
-      var y = v * this.audioStore.canvas.height/2;
+        var v = this.audioStore.dataArray[i] / 128.0;
+        var y = v * this.audioStore.canvas.height/2;
 
-      if(i === 0) {
-        this.audioStore.canvasCtx.moveTo(x, y);
-      } else {
-        this.audioStore.canvasCtx.lineTo(x, y);
+        if(i === 0) {
+          this.audioStore.canvasCtx.moveTo(x, y);
+        } else {
+          this.audioStore.canvasCtx.lineTo(x, y);
+        }
+
+        x += sliceWidth;
       }
+      this.audioStore.canvasCtx.lineTo(this.audioStore.canvas.width * 2/3, this.audioStore.canvas.height/2);
+      this.audioStore.canvasCtx.stroke();
 
-      x += sliceWidth;
+      this.audioStore.canvasCtx.fillStyle=this.audioStore.grd;
+      this.audioStore.canvasCtx.fillRect(0,0,this.audioStore.canvas.width,this.audioStore.canvas.height);
     }
-    this.audioStore.canvasCtx.lineTo(this.audioStore.canvas.width * 2/3, this.audioStore.canvas.height/2);
-    this.audioStore.canvasCtx.stroke();
 
-    this.audioStore.canvasCtx.fillStyle=this.audioStore.grd;
-    this.audioStore.canvasCtx.fillRect(0,0,this.audioStore.canvas.width,this.audioStore.canvas.height);
   };
+
+  dataArray = () => {
+    return this.audioStore.dataArray
+  }
 
   changeValue = (val) => {
     this.setState({vol: val})
@@ -178,4 +187,4 @@ function mapStateToProps(state) {
   return {activeSong: state.activeSong, transportMode: state.transportMode}
 }
 
-export default connect(mapStateToProps, { transportClick, setTransportPlay })(Transport)
+export default connect(mapStateToProps, { transportClick, setTransportPlay, storeFFTData })(Transport)

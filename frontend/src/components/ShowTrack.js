@@ -138,7 +138,7 @@ class ShowTrack extends React.Component {
 
     return (
       <div>
-        <h1>{this.props.showSong ? show : null}</h1>
+        <div>{this.props.showSong ? show : null}</div>
       </div>
     )
   }

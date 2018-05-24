@@ -8,7 +8,8 @@ const defaultState = {
   showUser: null,
   htmlAudio: null,
   favoriteList: [],
-  followsList: []
+  followsList: [],
+  dataArray: null
 }
 
 
@@ -56,6 +57,8 @@ export default function shoppingListItemReducer(state = defaultState, action) {
           comments: [...state.showSong.comments, action.payload]
         }
       }
+    case 'SET_DATA':
+      return {...state, dataArray: action.payload}
     default:
       return state;
   }

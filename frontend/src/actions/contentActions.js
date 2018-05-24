@@ -27,3 +27,9 @@ export function postComment(track_id, content, auth) {
     })
   }
 }
+
+export function storeFFTData(func) {
+  return (dispatch) => {
+    dispatch({type: "SET_DATA", payload: func})
+  }
+}

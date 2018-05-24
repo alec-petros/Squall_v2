@@ -9,6 +9,7 @@ import SidebarContainer from './containers/SidebarContainer'
 import Transport from './components/Transport'
 import ShowTrack from './components/ShowTrack'
 import ShowUser from './components/ShowUser'
+import Simple from './containers/three/Simple'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
 import { setAuth, logout, setSongs, setSongsStream, getFavorites } from './actions/actions'
@@ -44,6 +45,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Route path="/simple" component={Simple} />
         <NavContainer history={this.props.history} logout={this.logout} />
         <SidebarContainer history={this.props.history} />
         <div id="main-body">
