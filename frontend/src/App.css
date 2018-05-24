@@ -93,6 +93,8 @@ html, body {
   width: 90%;
   padding-top: 40px;
   float: right;
+  position: fixed;
+  right: 0px;
   background-color: #c1c1c1;
 }
 
@@ -110,7 +112,6 @@ html, body {
 
 .sidebarButton {
   color: #b2b2b2;
-
 }
 
 #songList {
@@ -176,6 +177,7 @@ html, body {
 #transport {
   position: fixed;
   bottom: 0px;
+  z-index: 4;
   height: 100px;
   width: 100%;
   text-align: left;
