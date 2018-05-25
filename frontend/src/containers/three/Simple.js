@@ -1,10 +1,15 @@
 import React from 'react';
 import React3 from 'react-three-renderer';
 import * as THREE from 'three';
+import OBJLoader from 'three-obj-loader'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
 import grid from '../../images/grid.png'
+import stars from '../../images/stars.png'
 import Box from './Box'
+import mtn_obj from '../../models/mtn/mtn_obj.obj'
+
+OBJLoader(THREE)
 
 class Simple extends React.Component {
   constructor(props, context) {
@@ -14,7 +19,9 @@ class Simple extends React.Component {
     // React will think that things have changed when they have not.
     this.cameraPosition = new THREE.Vector3(0, 0, 5);
     this.extrudePosition = new THREE.Vector3(0, 0, -175)
-    this.mtnPos = new THREE.Vector3(0, 0, -999)
+    this.torusPosition = new THREE.Vector3(0, 250, -920)
+    this.wallPos = new THREE.Vector3(0, 0, -990)
+    this.mtnPos = new THREE.Vector3(0, 0, -880)
     this.wavePosition = new THREE.Vector3(-80, -130, -500)
     this.floorPosition = new THREE.Vector3(0, -200, -100)
     let point = new THREE.Vector3(0, 0, 0)
@@ -58,15 +65,14 @@ class Simple extends React.Component {
       } else {
         this.setState({
           cubeRotation: new THREE.Euler(
-            this.state.cubeRotation.x + 0.01,
-            this.state.cubeRotation.y + 0.01,
-            0
+            this.state.cubeRotation.x + 0.00,
+            this.state.cubeRotation.y + 0.00,
+            this.state.cubeRotation.z + 0.01
           ),
         });
       }
       let z = 1
       this.wirePoints = this.wirePoints.map(point => {
-        console.log(this.wirePoints)
         let int = Math.random()
         int >= 0.5 ? z++ : z--
         return new THREE.Vector3(point.x + z, point.y + z, point.z + z)
@@ -75,6 +81,37 @@ class Simple extends React.Component {
       // this helps with updates and pure rendering.
       // React will be sure that the rotation has now updated.
     };
+  }
+
+  componentDidMount(){
+    this.THREE = THREE;
+    const objLoader = new this.THREE.OBJLoader();
+
+    console.log(typeof objLoader)
+
+    // load a resource
+    objLoader.load(
+      // resource URL
+      mtn_obj,
+      // called when resource is loaded
+      ( object ) => {
+        console.log(object)
+        this.refs.group.add(object);
+
+      },
+      // called when loading is in progresses
+      function ( xhr ) {
+
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+      },
+      // called when loading has errors
+      function ( error ) {
+
+        console.log( error );
+
+      }
+    );
   }
 
   render() {
@@ -98,9 +135,9 @@ class Simple extends React.Component {
       onAnimate={this._onAnimate}
     >
       <scene>
-        <pointLight
-          position={lightPos}
-          />
+      <pointLight
+        position={this.torusPosition}
+        />
        <spotLight
          position={otherLightPos}
          rotation={otherLightRot}
@@ -126,8 +163,31 @@ class Simple extends React.Component {
           blending={THREE.MultiplyBlending}
           />
       </line>
+      <group
+        position={this.wavePosition}
+        ref='group'
+        />
+      <mesh
+        position={this.torusPosition}
+        rotation={this.state.cubeRotation}
+        castShadow={true}
+        >
+        <torusKnotGeometry
+          radius={this.state.rms / 3}
+          tube={10 + (this.state.rms / 10)}
+          p={4}
+          tubularSegments={100}
+          radialSegments={20}
+          >
+        </torusKnotGeometry>
+        <meshPhongMaterial
+          color={'#ffb50a'}
+          metal={true}
+        />
+      </mesh>
       <mesh
         position={this.mtnPos}
+        receiveShadow={true}
         >
         <extrudeGeometry
           steps={5}
@@ -199,19 +259,6 @@ class Simple extends React.Component {
             color={'#290059'}
           />
         </mesh>
-        <mesh
-          rotation={this.state.cubeRotation}
-        >
-          <boxGeometry
-            width={this.state.rms / 128}
-            height={this.state.rms / 128}
-            depth={this.state.rms / 128}
-          />
-          <meshLambertMaterial
-            emissive="#006b67"
-            color={'#e5e5e5'}
-          />
-        </mesh>
         <line
           position={this.wirePos}
           name="wireframe"
@@ -225,6 +272,7 @@ class Simple extends React.Component {
         </line>
         <mesh
           position={this.floorPosition}
+          receiveShadow={true}
           name="floor"
         >
           <boxGeometry
@@ -235,6 +283,27 @@ class Simple extends React.Component {
         <meshLambertMaterial>
           <texture
             url={grid}
+            minFilter={THREE.NearestFilter}
+            repeat={new THREE.Vector2(1, 2)}
+            offset={new THREE.Vector2(0, -1)}
+            alphaTest={0.5}
+            side={THREE.DoubleSide}
+            depthWrite={false}
+             />
+         </meshLambertMaterial>
+        </mesh>
+        <mesh
+          position={this.wallPos}
+          name="wall"
+        >
+          <boxGeometry
+            width={3000}
+            height={3000}
+            depth={1}
+          />
+        <meshLambertMaterial>
+          <texture
+            url={stars}
             minFilter={THREE.NearestFilter}
             repeat={new THREE.Vector2(1, 2)}
             offset={new THREE.Vector2(0, -1)}
