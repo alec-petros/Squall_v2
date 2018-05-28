@@ -22,6 +22,7 @@ class Simple extends React.Component {
     this.torusPosition = new THREE.Vector3(0, 250, -920)
     this.wallPos = new THREE.Vector3(0, 0, -990)
     this.mtnPos = new THREE.Vector3(0, 0, -880)
+    this.objPos = new THREE.Vector3(450, -150, -800)
     this.wavePosition = new THREE.Vector3(-80, -130, -500)
     this.floorPosition = new THREE.Vector3(0, -200, -100)
     let point = new THREE.Vector3(0, 0, 0)
@@ -86,30 +87,21 @@ class Simple extends React.Component {
   componentDidMount(){
     this.THREE = THREE;
     const objLoader = new this.THREE.OBJLoader();
-
-    console.log(typeof objLoader)
-
     // load a resource
     objLoader.load(
       // resource URL
       mtn_obj,
       // called when resource is loaded
       ( object ) => {
-        console.log(object)
-        this.refs.group.add(object);
-
+        this.refs.mountain.add(object);
       },
       // called when loading is in progresses
       function ( xhr ) {
-
         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
       },
       // called when loading has errors
       function ( error ) {
-
         console.log( error );
-
       }
     );
   }
@@ -138,18 +130,18 @@ class Simple extends React.Component {
       <pointLight
         position={this.torusPosition}
         />
-       <spotLight
-         position={otherLightPos}
-         rotation={otherLightRot}
-         />
-        <perspectiveCamera
-          name="camera"
-          fov={80}
-          aspect={width / height}
-          near={0.1}
-          far={1000}
-          position={this.cameraPosition}
-        />
+      <spotLight
+       position={otherLightPos}
+       rotation={otherLightRot}
+       />
+      <perspectiveCamera
+        name="camera"
+        fov={80}
+        aspect={width / height}
+        near={0.1}
+        far={1000}
+        position={this.cameraPosition}
+      />
       <line
         position={this.wavePosition}
         castShadow={true}
@@ -159,13 +151,12 @@ class Simple extends React.Component {
           />
         <lineBasicMaterial
           color={0x00ff00}
-          lights={true}
           blending={THREE.MultiplyBlending}
           />
       </line>
       <group
-        position={this.wavePosition}
-        ref='group'
+        position={this.objPos}
+        ref='mountain'
         />
       <mesh
         position={this.torusPosition}
@@ -286,9 +277,6 @@ class Simple extends React.Component {
             minFilter={THREE.NearestFilter}
             repeat={new THREE.Vector2(1, 2)}
             offset={new THREE.Vector2(0, -1)}
-            alphaTest={0.5}
-            side={THREE.DoubleSide}
-            depthWrite={false}
              />
          </meshLambertMaterial>
         </mesh>
@@ -307,9 +295,6 @@ class Simple extends React.Component {
             minFilter={THREE.NearestFilter}
             repeat={new THREE.Vector2(1, 2)}
             offset={new THREE.Vector2(0, -1)}
-            alphaTest={0.5}
-            side={THREE.DoubleSide}
-            depthWrite={false}
              />
          </meshLambertMaterial>
         </mesh>

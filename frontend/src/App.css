@@ -2,13 +2,13 @@
   text-align: center;
   height: 100%;
   font-family: 'Ubuntu Mono', monospace;
-
 }
 
 .song {
   text-align: left;
   vertical-align: middle;
   height: 50px;
+  width: 100%;
   z-index: 2;
 }
 
@@ -17,9 +17,19 @@
   vertical-align: middle;
 }
 
+.song-text {
+  width: 75%;
+  height: 50%;
+  overflow: hidden;
+  text-align: left;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 .song-like {
   display: inline;
   position: relative;
+  z-index: 2;
   top: 15%;
   bottom: 50%;
   height: 30px;
@@ -70,6 +80,7 @@ html, body {
   width: 100%;
   margin: 0;
   background-color: #c1c1c1;
+  position: absolute;
 }
 
 .song-date {
@@ -87,11 +98,11 @@ html, body {
 }
 
 #main-body {
-  display: block;
+  display: inline-block;
   overflow: scroll;
   height: 90vh;
   width: 90%;
-  padding-top: 40px;
+  padding-top: 60px;
   float: right;
   position: fixed;
   right: 0px;
@@ -102,12 +113,12 @@ html, body {
   font-family: 'Share Tech Mono', monospace;
   position: fixed;
   left: 0;
+  z-index: 2;
   display: inline-block;
   width: 10%;
   padding-top: 60px;
   height: 100%;
   float: left;
-  background-color: #c1c1c1;
 }
 
 .sidebarButton {
@@ -115,17 +126,17 @@ html, body {
 }
 
 #songList {
-  padding: 20px;
+  padding: 0px;
   border-color: rgb(170, 170, 170);
   border-style: solid;
   border-width: 2px;
 }
 
 #showDiv {
-  display: inline-block;
+  display: block;
   position: absolute;
-  padding: 20px;
-  font-size: 14px;
+  padding-left: 20px;
+  font-size: 12px;
   text-align: left;
   float: left;
   width: 100%;
