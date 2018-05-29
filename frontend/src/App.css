@@ -141,13 +141,14 @@ html, body {
   float: left;
   width: 100%;
   height: 80%;
-  z-index: 2;
+  z-index: 1;
 }
 
 #threeCanvas {
   z-index: 2;
   display: inline-block;
-  position: absolute;
+  position: fixed;
+  left: 0;
 }
 
 #comments {
