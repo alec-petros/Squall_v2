@@ -8,6 +8,7 @@ import grid from '../../images/grid.png'
 import stars from '../../images/stars.png'
 import Box from './Box'
 import Resources from './Resources'
+import FloorWire from './FloorWire'
 import mtn_obj from '../../models/mtn/mtn_obj.obj'
 import Loader from './Loader'
 import city from '../../models/city/city.obj'
@@ -250,25 +251,7 @@ class Simple extends React.Component {
                 color={'#e5e5e5'}
                 />
             </line>
-            <mesh
-              position={this.floorPosition}
-              receiveShadow={true}
-              name="floor"
-              >
-              <boxGeometry
-                widthSegments={30}
-                depthSegments={20}
-                width={3000}
-                height={1}
-                depth={2000}
-                />
-              <meshPhongMaterial
-                wireframe={true}
-                wireframeLinewidth={20}
-                color={'#d200f7'}
-                >
-              </meshPhongMaterial>
-            </mesh>
+            <FloorWire position={this.floorPosition} />
             <mesh
               position={this.floorPosition}
               receiveShadow={true}
