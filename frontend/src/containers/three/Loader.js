@@ -17,6 +17,7 @@ class Loader extends React.Component {
       ( object ) => {
         // const material = new THREE.MeshPhongMaterial({color: '#0b0019'})
         console.log(object)
+        object.receiveShadow = true
         object.children.forEach(child => child.material = this.props.material)
         this.refs.group.add(object);
       },

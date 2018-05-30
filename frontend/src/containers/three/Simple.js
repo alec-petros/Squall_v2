@@ -138,9 +138,6 @@ class Simple extends React.Component {
             <pointLight
               position={this.torusPosition}
               />
-            <pointLight
-              position={otherLightPos}
-              />
             <perspectiveCamera
               name="camera"
               fov={80}
@@ -179,13 +176,14 @@ class Simple extends React.Component {
               position={this.spherePos}
               rotation={this.sphereRot}
               radius={100}
-              widthSegments={20}
-              heightSegments={20}
+              widthSegments={35}
+              heightSegments={35}
               data={this.props.dataArray}
               />
             <mesh
               position={this.spherePos}
               rotation={this.ringRot}
+              castShadow={true}
               >
               <ringGeometry
                 innerRadius={200}
@@ -194,12 +192,18 @@ class Simple extends React.Component {
                 phiSegments={8}
                 />
               <meshPhongMaterial
-                color={'red'}
+                color={'#0b0019'}
+                transparent={true}
+                opacity={0.5}
+                shininess={100}
+                metal={true}
+
                 />
             </mesh>
             <mesh
               position={this.spherePos}
               rotation={this.otherRingRot}
+              castShadow={true}
               >
               <ringGeometry
                 innerRadius={180}
@@ -208,7 +212,12 @@ class Simple extends React.Component {
                 phiSegments={8}
                 />
               <meshPhongMaterial
-                color={'red'}
+                color={'#0b0019'}
+                transparent={true}
+                opacity={0.5}
+                shininess={100}
+                metal={true}
+
                 />
             </mesh>
             <Loader object={rand} material={this.blackMat} scale={180} position={this.vaporPos} rotation={this.vaporRot} />
