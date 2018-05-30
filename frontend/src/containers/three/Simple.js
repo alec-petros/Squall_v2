@@ -26,7 +26,7 @@ class Simple extends React.Component {
 
     this.cameraPosition = new THREE.Vector3(0, 0, 5);
     this.extrudePosition = new THREE.Vector3(0, 0, -175)
-    this.spherePos = new THREE.Vector3(0, 250, -800)
+    this.spherePos = new THREE.Vector3(0, 140, -600)
     this.sphereRot = new THREE.Euler(0, 0, 0)
     this.ringRot = new THREE.Euler(0, 0, 0)
     this.otherRingRot = new THREE.Euler(0, 0, 0)
@@ -63,8 +63,10 @@ class Simple extends React.Component {
       // we will get this callback every frame
       // this.ringRot.x += 0.05;
       // this.ringRot.y += 0.05;
-      this.ringRot = new THREE.Euler(this.ringRot.x + 0.005, this.ringRot.y + 0.005, 0)
-      this.otherRingRot = new THREE.Euler(this.otherRingRot.x - 0.005, this.otherRingRot.y + 0.005, 0)
+      this.ringRot = new THREE.Euler(this.ringRot.x + 0.005, this.ringRot.y + 0.005, this.ringRot.z + 0.005)
+      this.otherRingRot = new THREE.Euler(this.otherRingRot.x - 0.005, this.otherRingRot.y + 0.005, this.otherRingRot.z - 0.005)
+      this.sphereRot = new THREE.Euler(0, 0, this.sphereRot.z - 0.005)
+
 
       this.sinFunc.push(Math.sin((this.frameCount++ / 10)))
       this.sinFunc.length === 431 ? this.sinFunc = this.sinFunc.slice(1, 431) : null
@@ -193,14 +195,14 @@ class Simple extends React.Component {
               >
               <ringGeometry
                 innerRadius={200}
-                outerRadius={230}
+                outerRadius={230 + ((this.state.rms / 3) - 28)}
                 thetaSegments={40}
                 phiSegments={8}
                 />
               <meshPhongMaterial
-                color={'#0b0019'}
+                color={'#56e5ff'}
                 transparent={true}
-                opacity={0.5}
+                opacity={0.7}
                 shininess={100}
                 metal={true}
 
@@ -212,15 +214,15 @@ class Simple extends React.Component {
               castShadow={true}
               >
               <ringGeometry
-                innerRadius={180}
+                innerRadius={180 - ((this.state.rms / 3) - 28)}
                 outerRadius={200}
                 thetaSegments={40}
                 phiSegments={8}
                 />
               <meshPhongMaterial
-                color={'#0b0019'}
+                color={'#56e5ff'}
                 transparent={true}
-                opacity={0.5}
+                opacity={0.7}
                 shininess={100}
                 metal={true}
 

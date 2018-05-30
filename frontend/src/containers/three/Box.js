@@ -11,7 +11,7 @@ class Resources extends React.Component {
     this.container.sphere = new THREE.SphereBufferGeometry(this.props.radius, this.props.widthSegments, this.props.heightSegments)
     this.container.morphArr = [...this.container.sphere.attributes.position.array]
     this.container.sphere.dynamic = true
-    this.container.mat = new THREE.MeshLambertMaterial({emissive: "#600080", color: '0x00ff00', emissiveIntensity: 100})
+    this.container.mat = new THREE.MeshPhongMaterial({emissive: "#600080", color: '0x00ff00', emissiveIntensity: 10})
     this.container.mesh = new THREE.Mesh(this.container.sphere, this.container.mat)
     console.log('sphere', this.container.sphere)
     this.refs.group.add(this.container.mesh)
@@ -29,7 +29,11 @@ class Resources extends React.Component {
       // }
       // position.needsUpdate = true
       position.array.map(face => {
-        position.array[i] = this.container.morphArr[i] + ((this.props.data()[x] / 10) - 12)
+        if (position.array[i] > (this.container.morphArr[i] + ((this.props.data()[x] / 5) - 24))) {
+          position.array[i] = (this.container.morphArr[i] + ((this.props.data()[x] / 5) - 24))
+        } else {
+          position.array[i] = (((position.array[i] * 20) + this.container.morphArr[i] + ((this.props.data()[x] / 5) - 24)) / 21)
+        }
         i++
         x++
         x === this.props.data().length ? x = 0 : null
