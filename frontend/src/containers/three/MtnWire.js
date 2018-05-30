@@ -1,7 +1,8 @@
 import React from 'react';
 import * as THREE from 'three';
 import {MeshLine, MeshLineMaterial} from 'three.meshline'
-import vapor_mtn from '../../models/vapor_mtn.obj'
+// import vapor_mtn from '../../models/vapor_mtn.obj'
+import rand from '../../models/rand.obj'
 
 class MtnWire extends React.Component {
 
@@ -17,7 +18,7 @@ class MtnWire extends React.Component {
     this.THREE = THREE;
     const objLoader = new this.THREE.OBJLoader();
     objLoader.load(
-      vapor_mtn,
+      rand,
       ( object ) => {
         // const material = new THREE.MeshPhongMaterial({color: '#0b0019'})
         console.log(object.children[0])
@@ -33,7 +34,12 @@ class MtnWire extends React.Component {
         this.objContainer.line.geometry.attributes.position.dynamic = true
         this.objContainer.line.geometry.attributes.position.needsUpdate = true
 
-        const material = new MeshLineMaterial({color: new THREE.Color('#d200f7'), lineWidth: 1});
+        const material = new MeshLineMaterial({
+          color: new THREE.Color('#c444ff'),
+          lineWidth: 3,
+          transparent: true,
+          opacity: 0.5
+        });
         var mesh = new THREE.Mesh( this.objContainer.line.geometry, material )
         this.refs.group.add(mesh)
       },

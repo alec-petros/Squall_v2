@@ -18,7 +18,7 @@ class FloorWire extends React.Component {
     this.objContainer.line.geometry.attributes.position.dynamic = true
     this.objContainer.line.geometry.attributes.position.needsUpdate = true
 
-    const material = new MeshLineMaterial({color: new THREE.Color('#d200f7'), lineWidth: 2});
+    const material = new MeshLineMaterial({color: new THREE.Color('#56e5ff'), lineWidth: 2});
     var mesh = new THREE.Mesh( this.objContainer.line.geometry, material )
     console.log('mesh', mesh.geometry.attributes.position)
     this.refs.group.add(mesh)

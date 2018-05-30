@@ -5,7 +5,7 @@ import OBJLoader from 'three-obj-loader'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
 import grid from '../../images/grid.png'
-import stars from '../../images/stars.png'
+import stars from '../../images/stars.jpg'
 import Box from './Box'
 import Resources from './Resources'
 import FloorWire from './FloorWire'
@@ -14,6 +14,7 @@ import Loader from './Loader'
 import city from '../../models/city/city.obj'
 import peak from '../../models/peak/peak.obj'
 import vapor_mtn from '../../models/vapor_mtn.obj'
+import rand from '../../models/rand.obj'
 import MtnWire from './MtnWire'
 
 OBJLoader(THREE)
@@ -24,17 +25,20 @@ class Simple extends React.Component {
 
     this.cameraPosition = new THREE.Vector3(0, 0, 5);
     this.extrudePosition = new THREE.Vector3(0, 0, -175)
-    this.torusPosition = new THREE.Vector3(0, 250, -920)
-    this.wallPos = new THREE.Vector3(0, 0, -990)
+    this.spherePos = new THREE.Vector3(0, 250, -800)
+    this.sphereRot = new THREE.Euler(0, 0, 0)
+    this.ringRot = new THREE.Euler(0, 0, 0)
+    this.otherRingRot = new THREE.Euler(0, 0, 0)
+    this.wallPos = new THREE.Vector3(0, -650, -990)
     this.mtnPos = new THREE.Vector3(0, 0, -880)
     this.cityPos = new THREE.Vector3(-800, -150, -800)
     this.peakPos = new THREE.Vector3(700, -100, -550)
     this.peakRot = new THREE.Euler(0, 1.3, 0)
     this.objPos = new THREE.Vector3(450, -150, -800)
-    this.vaporPos = new THREE.Vector3(0, -340, -100)
+    this.vaporPos = new THREE.Vector3(-120, -250, -600)
     this.vaporRot = new THREE.Euler(0, 3.1, 0)
-    this.leftWavePosition = new THREE.Vector3(210, -260, -500)
-    this.rightWavePosition = new THREE.Vector3(10, -260, -500)
+    this.leftWavePosition = new THREE.Vector3(210, -180, -500)
+    this.rightWavePosition = new THREE.Vector3(10, -200, -500)
     this.leftWaveRot = new THREE.Euler(1.55, 0, 1.55)
     this.rightWaveRot = new THREE.Euler(-1.55, 0, 1.55)
     this.floorPosition = new THREE.Vector3(0, -250, -100)
@@ -56,6 +60,10 @@ class Simple extends React.Component {
 
     this._onAnimate = () => {
       // we will get this callback every frame
+      // this.ringRot.x += 0.05;
+      // this.ringRot.y += 0.05;
+      this.ringRot = new THREE.Euler(this.ringRot.x + 0.005, this.ringRot.y + 0.005, 0)
+      this.otherRingRot = new THREE.Euler(this.otherRingRot.x - 0.005, this.otherRingRot.y + 0.005, 0)
 
       this.sinFunc.push(Math.sin((this.frameCount++ / 10)))
       this.sinFunc.length === 431 ? this.sinFunc = this.sinFunc.slice(1, 431) : null
@@ -167,8 +175,44 @@ class Simple extends React.Component {
                 blending={THREE.MultiplyBlending}
                 />
             </line>
-
-            <MtnWire scale={140} position={this.vaporPos} rotation={this.vaporRot} />
+            <Box
+              position={this.spherePos}
+              rotation={this.sphereRot}
+              radius={100}
+              widthSegments={20}
+              heightSegments={20}
+              data={this.props.dataArray}
+              />
+            <mesh
+              position={this.spherePos}
+              rotation={this.ringRot}
+              >
+              <ringGeometry
+                innerRadius={200}
+                outerRadius={230}
+                thetaSegments={40}
+                phiSegments={8}
+                />
+              <meshPhongMaterial
+                color={'red'}
+                />
+            </mesh>
+            <mesh
+              position={this.spherePos}
+              rotation={this.otherRingRot}
+              >
+              <ringGeometry
+                innerRadius={180}
+                outerRadius={200}
+                thetaSegments={40}
+                phiSegments={8}
+                />
+              <meshPhongMaterial
+                color={'red'}
+                />
+            </mesh>
+            <Loader object={rand} material={this.blackMat} scale={180} position={this.vaporPos} rotation={this.vaporRot} />
+            <MtnWire scale={180} position={this.vaporPos} rotation={this.vaporRot} />
             <FloorWire position={this.floorPosition} sin={this.sinFunc} />
             <mesh
               position={this.subPosition}
@@ -191,8 +235,8 @@ class Simple extends React.Component {
               name="wall"
               >
               <boxGeometry
-                width={3000}
-                height={3000}
+                width={3500}
+                height={3500}
                 depth={1}
                 />
               <meshLambertMaterial>
