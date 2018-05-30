@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import OBJLoader from 'three-obj-loader'
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux'
+import { swapMode } from '../../actions/actions'
 import grid from '../../images/grid.png'
 import stars from '../../images/stars.jpg'
 import Box from './Box'
@@ -37,10 +38,10 @@ class Simple extends React.Component {
     this.objPos = new THREE.Vector3(450, -150, -800)
     this.vaporPos = new THREE.Vector3(-120, -250, -600)
     this.vaporRot = new THREE.Euler(0, 3.1, 0)
-    this.leftWavePosition = new THREE.Vector3(210, -180, -500)
-    this.rightWavePosition = new THREE.Vector3(10, -200, -500)
-    this.leftWaveRot = new THREE.Euler(1.55, 0, 1.55)
-    this.rightWaveRot = new THREE.Euler(-1.55, 0, 1.55)
+    this.leftWavePosition = new THREE.Vector3(210, -135, -500)
+    this.rightWavePosition = new THREE.Vector3(10, -150, -500)
+    this.leftWaveRot = new THREE.Euler(1.4, 0, 1.55)
+    this.rightWaveRot = new THREE.Euler(-1.7, 0, 1.55)
     this.floorPosition = new THREE.Vector3(0, -250, -100)
     this.subPosition = new THREE.Vector3(0, -275, -100)
 
@@ -109,6 +110,11 @@ class Simple extends React.Component {
   }
 
   componentDidMount(){
+    this.props.swapMode()
+  }
+
+  componentWillUnmount() {
+    this.props.swapMode()
   }
 
   render() {
@@ -267,4 +273,4 @@ function mapStateToProps (state) {
   return {dataArray: state.dataArray}
 }
 
-export default connect(mapStateToProps)(Simple)
+export default connect(mapStateToProps, {swapMode})(Simple)

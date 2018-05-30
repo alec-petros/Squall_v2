@@ -17,9 +17,9 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/:id/stream
   def stream
     stream = []
-    stream.push(@user.tracks.map {|track| track.destructure})
+    stream.push(@user.tracks.reverse.map {|track| track.destructure})
     followed_tracks = @user.followed_artists.map {|art| art.tracks.map {|track| track.destructure}}
-    stream.push(*followed_tracks)
+    stream.push(*followed_tracks.reverse)
     render json: stream.flatten
   end
 

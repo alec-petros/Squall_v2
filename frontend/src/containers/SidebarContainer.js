@@ -29,7 +29,7 @@ class SidebarContainer extends React.Component {
               style={{backgroundColor: 'rgba(68, 68, 68, 255)'}}
               className="sidebarButton"
               onClick={() => {
-                this.props.history.push('/simple')
+                null
               }}>/groups</Button>
         </ButtonGroup>
       </div>

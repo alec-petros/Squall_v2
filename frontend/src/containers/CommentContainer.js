@@ -29,15 +29,15 @@ class CommentContainer extends React.Component {
     const comments = this.props.song.comments.map(com => <Well onClick={() => {this.props.history.push(`/users/${com.user.id}`)}}>{com.user.username} - {com.content}</Well>)
 
     return (
-      <div>
-        <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
+      <div id="commentDiv">
+        <form id="commentForm" onChange={this.handleChange} onSubmit={this.handleSubmit}>
           <input name="content" value={this.state.content} size="40" />
           <input type="submit" value="Save Comment" />
           <br></br><br></br>
-          <ul id="comments">
-            { comments }
-          </ul>
         </form>
+        <ul id="comments">
+          { comments }
+        </ul>
       </div>
     )
   }

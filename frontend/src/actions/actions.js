@@ -41,6 +41,12 @@ export function login(username, password){
   }
 }
 
+export function swapMode() {
+  return (dispatch) => {
+    dispatch({type: "SWAP_MODE", payload: null})
+  }
+}
+
 export function register(username, password) {
   return (dispatch) => {
     fetch(API_URL + '/api/v1/users', {

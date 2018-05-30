@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { addSong } from '../actions/actions'
+import loader from '../images/loader.gif'
 
 class Uploader extends React.Component {
 
   state = {
     filename: "",
-    description: ""
+    description: "",
+    mode: "form"
   }
 
   handleChange = (e) => {
@@ -15,6 +17,7 @@ class Uploader extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
+    this.setState({mode: 'submit'})
     const form = document.querySelector('#uploadForm')
     const fileInput = document.querySelector('#fileInput')
     const formData = new FormData(form)
@@ -42,7 +45,8 @@ class Uploader extends React.Component {
           <input type="text" name="filename" placeholder="Name" value={this.state.filename} onChange={this.handleChange}></input><br></br>
           <textarea placeholder="Description" name="description" value={this.state.description} onChange={this.handleChange}></textarea><br></br>
           <input type="file" id="fileInput"></input><br></br>
-          <input type="submit"></input>
+          <input type="submit"></input><br></br>
+          {this.state.mode === "submit" ? <img src={loader} id="loader"></img> : null}
         </form>
       </div>
     )

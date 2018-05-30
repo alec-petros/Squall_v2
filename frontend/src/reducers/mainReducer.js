@@ -4,6 +4,7 @@ const defaultState = {
   activeSong: null,
   transportMode: "play",
   transportPlay: 'init',
+  renderMode: 'transport',
   showSong: null,
   showUser: null,
   htmlAudio: null,
@@ -27,9 +28,13 @@ export default function shoppingListItemReducer(state = defaultState, action) {
       console.log('action', action)
       return {...state, transportPlay: action.payload}
     case 'TRANSPORT_CLICK':
+      let renMode = null
+      state.transportMode === 'pause' ? renMode = 'play' : renMode = 'pause'
+      return {...state, transportMode: renMode}
+    case 'SWAP_MODE':
       let mode = null
-      state.transportMode === 'pause' ? mode = 'play' : mode = 'pause'
-      return {...state, transportMode: mode}
+      state.renderMode === 'transport' ? mode = 'vis' : mode = 'transport'
+      return {...state, renderMode: mode}
     case 'ADD_SONG':
       return {...state, songs: [action.payload, ...state.songs]}
     case 'SET_SHOW':

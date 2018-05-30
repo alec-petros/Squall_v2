@@ -2,6 +2,9 @@
   text-align: center;
   height: 100%;
   font-family: 'Ubuntu Mono', monospace;
+  background-color: #c1c1c1;
+  margin-bottom: 0;
+  background-color: #c1c1c1;
 }
 
 .song {
@@ -97,12 +100,15 @@ html, body {
   justify-content: center;
 }
 
-#main-body {
+#mainBody {
   display: inline-block;
-  overflow: scroll;
   height: 90vh;
   width: 90%;
   padding-top: 60px;
+  padding-right: 0px;
+  margin-right: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
   float: right;
   position: fixed;
   right: 0px;
@@ -142,6 +148,7 @@ html, body {
   width: 100%;
   height: 80%;
   z-index: 1;
+  background-color: #c1c1c1;
 }
 
 #threeCanvas {
@@ -154,7 +161,12 @@ html, body {
 #comments {
   height: 50vh;
   display: block;
-  overflow: scroll;
+  padding-bottom: 0;
+}
+
+#commentDiv {
+  margin: 0;
+  padding: 0;
 }
 
 #editTrack {
@@ -174,7 +186,8 @@ html, body {
 #showDesc {
   padding: 20px;
   font-size: 14px;
-  text-align: left
+  text-align: left;
+  margin-bottom: 0;
 }
 
 #showHeader {

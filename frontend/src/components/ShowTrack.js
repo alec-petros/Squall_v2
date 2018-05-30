@@ -112,6 +112,7 @@ class ShowTrack extends React.Component {
         <div id="showDiv">
           <Song song={this.props.showSong} />
           {this.props.showSong.owner === true ? <button onClick={this.changeMode}>Edit Song</button> : null}
+          <button onClick={() => this.props.history.push('/simple')}>Visualize</button>
           <h4 id="showDesc">{this.props.showSong.artist} says: '{this.props.showSong.description}'</h4>
           <CommentContainer history={this.props.history} song={this.props.showSong} />
         </div>

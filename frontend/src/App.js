@@ -48,7 +48,7 @@ class App extends Component {
         <Route path="/simple" component={Simple} />
         <NavContainer history={this.props.history} logout={this.logout} />
         <SidebarContainer history={this.props.history} />
-        <div id="main-body">
+        <div id="mainBody">
           <Route exact path="/" render={ (renderProps) =>
               <SongList history={ renderProps.history } songs={ this.props.songs } />
             } />

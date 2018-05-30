@@ -77,7 +77,7 @@ class Transport extends React.Component {
 
     this.audioStore.analyser.getByteTimeDomainData(this.audioStore.dataArray)
 
-    if (this.state.mode === "transport") {
+    if (this.props.renderMode === "transport") {
       this.audioStore.canvasCtx.fillStyle = 'rgba(68, 68, 68, 255)';
       this.audioStore.canvasCtx.fillRect(0, 0, this.audioStore.canvas.width, this.audioStore.canvas.height);
 
@@ -175,7 +175,7 @@ class Transport extends React.Component {
         }
         <Panel id="transport-meta">
           <h4>{this.props.activeSong.artist}</h4>
-          <p>{this.props.activeSong.name} ({this.state.location} Seconds / {Math.floor(this.state.duration / 60)} Minutes)</p>
+          <p>{this.props.activeSong.name.substring(0, 18)} ({this.state.location} Seconds / {Math.floor(this.state.duration / 60)} Minutes)</p>
           <p>({this.props.activeSong.play_count} Plays)</p>
         </Panel>
         <canvas id="transport-canvas" width="800" height='100'></canvas>
@@ -185,7 +185,7 @@ class Transport extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {activeSong: state.activeSong, transportMode: state.transportMode}
+  return {activeSong: state.activeSong, transportMode: state.transportMode, renderMode: state.renderMode}
 }
 
 export default connect(mapStateToProps, { transportClick, setTransportPlay, storeFFTData })(Transport)
