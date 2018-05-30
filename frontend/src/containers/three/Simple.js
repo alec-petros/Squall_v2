@@ -13,6 +13,8 @@ import mtn_obj from '../../models/mtn/mtn_obj.obj'
 import Loader from './Loader'
 import city from '../../models/city/city.obj'
 import peak from '../../models/peak/peak.obj'
+import vapor_mtn from '../../models/vapor_mtn.obj'
+import MtnWire from './MtnWire'
 
 OBJLoader(THREE)
 
@@ -25,18 +27,21 @@ class Simple extends React.Component {
     this.torusPosition = new THREE.Vector3(0, 250, -920)
     this.wallPos = new THREE.Vector3(0, 0, -990)
     this.mtnPos = new THREE.Vector3(0, 0, -880)
-    this.cityPos = new THREE.Vector3(-500, -150, -800)
-    this.peakPos = new THREE.Vector3(600, -50, -550)
-    this.peakRot = new THREE.Euler(0, 90, 0)
+    this.cityPos = new THREE.Vector3(-800, -150, -800)
+    this.peakPos = new THREE.Vector3(700, -100, -550)
+    this.peakRot = new THREE.Euler(0, 1.3, 0)
     this.objPos = new THREE.Vector3(450, -150, -800)
-    this.wavePosition = new THREE.Vector3(-80, -130, -500)
-    this.floorPosition = new THREE.Vector3(0, -200, -100)
-
-    let point = new THREE.Vector3(0, 0, 0)
-    this.wirePoints = [new THREE.Vector3(30, 0, -10), new THREE.Vector3(30, 50, 0), new THREE.Vector3(-20, 30, 0), new THREE.Vector3(10, 0, 20), new THREE.Vector3(-30, 10, 14), new THREE.Vector3(30, 0, -10)]
-    this.wirePos = new THREE.Vector3(0, 0, -100)
+    this.vaporPos = new THREE.Vector3(0, -340, -100)
+    this.vaporRot = new THREE.Euler(0, 3.1, 0)
+    this.leftWavePosition = new THREE.Vector3(210, -260, -500)
+    this.rightWavePosition = new THREE.Vector3(10, -260, -500)
+    this.leftWaveRot = new THREE.Euler(1.55, 0, 1.55)
+    this.rightWaveRot = new THREE.Euler(-1.55, 0, 1.55)
+    this.floorPosition = new THREE.Vector3(0, -250, -100)
+    this.subPosition = new THREE.Vector3(0, -275, -100)
 
     this.blackMat = new THREE.MeshPhongMaterial({color: '#0b0019'})
+    this.wireMat = new THREE.MeshPhongMaterial({wireframe: true, color: "red"})
 
     this.state = {
       cubeRotation: new THREE.Euler(),
@@ -45,8 +50,16 @@ class Simple extends React.Component {
       waveLines: []
     };
 
+    this.frameCount = 0
+
+    this.sinFunc = []
+
     this._onAnimate = () => {
       // we will get this callback every frame
+
+      this.sinFunc.push(Math.sin((this.frameCount++ / 10)))
+      this.sinFunc.length === 431 ? this.sinFunc = this.sinFunc.slice(1, 431) : null
+      // console.log(this.sinFunc)
 
       if (this.props.dataArray) {
         let tempRms
@@ -56,11 +69,11 @@ class Simple extends React.Component {
           tempRms = this.state.rms - 1
         }
         let spacing = (window.innerWidth/this.props.dataArray().length) * 1.5
-        let x = -(window.innerWidth / 2)
+        let x = window.innerWidth
         const data = this.props.dataArray()
         let arr = []
         for (let i = 0; i < data.length; i++) {
-          arr.push(new THREE.Vector3(x += spacing, data[i], 0))
+          arr.push(new THREE.Vector3(x -= spacing, data[i], 0))
         }
         this.setState({
           cubeRotation: new THREE.Euler(
@@ -81,12 +94,6 @@ class Simple extends React.Component {
           ),
         });
       }
-      let z = 1
-      this.wirePoints = this.wirePoints.map(point => {
-        let int = Math.random()
-        int >= 0.5 ? z++ : z--
-        return new THREE.Vector3(point.x + z, point.y + z, point.z + z)
-      })
       // pretend cubeRotation is immutable.
       // this helps with updates and pure rendering.
       // React will be sure that the rotation has now updated.
@@ -135,7 +142,8 @@ class Simple extends React.Component {
               position={this.cameraPosition}
               />
             <line
-              position={this.wavePosition}
+              position={this.leftWavePosition}
+              rotation={this.leftWaveRot}
               castShadow={true}
               >
               <geometry
@@ -146,114 +154,24 @@ class Simple extends React.Component {
                 blending={THREE.MultiplyBlending}
                 />
             </line>
-            <Loader object={city} scale={800} position={this.cityPos} material={this.blackMat} />
-            <Loader object={peak} scale={350} position={this.peakPos} material={this.blackMat} rotation={this.peakRot} />
-            <mesh
-              position={this.torusPosition}
-              rotation={this.state.cubeRotation}
+            <line
+              position={this.rightWavePosition}
+              rotation={this.rightWaveRot}
               castShadow={true}
               >
-              <torusKnotGeometry
-                radius={this.state.rms / 3}
-                tube={10 + (this.state.rms / 10)}
-                p={4}
-                tubularSegments={100}
-                radialSegments={20}
-                >
-              </torusKnotGeometry>
-              <meshPhongMaterial
-                color={'#ffb50a'}
-                metal={true}
-                />
-            </mesh>
-            <mesh
-              position={this.mtnPos}
-              receiveShadow={true}
-              >
-              <extrudeGeometry
-                steps={5}
-                amount={16}
-                bevelEnabled={true}
-                bevelThickness={1}
-                bevelSize={4}
-                bevelSegments={4}>
-                <shape>
-                  <moveTo
-                    x={-1200}
-                    y={-250}
-                    />
-                  <lineTo
-                    x={-1200}
-                    y={470 - (this.state.rms / 10)}
-                    />
-                  <lineTo
-                    x={-1000}
-                    y={140}
-                    />
-                  <lineTo
-                    x={-860}
-                    y={300 - (this.state.rms / 10)}
-                    />
-                  <lineTo
-                    x={-650}
-                    y={60}
-                    />
-                  <lineTo
-                    x={-430}
-                    y={420 - (this.state.rms / 10)}
-                    />
-                  <lineTo
-                    x={-110}
-                    y={-100}
-                    />
-                  <lineTo
-                    x={0}
-                    y={-160}
-                    />
-                  <lineTo
-                    x={300}
-                    y={560 - (this.state.rms / 10)}
-                    />
-                  <lineTo
-                    x={650}
-                    y={60}
-                    />
-                  <lineTo
-                    x={800}
-                    y={300 - (this.state.rms / 10)}
-                    />
-                  <lineTo
-                    x={1200}
-                    y={60}
-                    />
-                  <lineTo
-                    x={1200}
-                    y={-250}
-                    />
-                  <lineTo
-                    x={-1200}
-                    y={-250}
-                    />
-                </shape>
-              </extrudeGeometry>
-              <meshLambertMaterial
-                color={'#290059'}
-                />
-            </mesh>
-            <line
-              position={this.wirePos}
-              name="wireframe"
-              >
               <geometry
-                vertices={this.wirePoints}>
-              </geometry>
+                vertices={this.state.waveLines}
+                />
               <lineBasicMaterial
-                color={'#e5e5e5'}
+                color={0x00ff00}
+                blending={THREE.MultiplyBlending}
                 />
             </line>
-            <FloorWire position={this.floorPosition} />
+
+            <MtnWire scale={140} position={this.vaporPos} rotation={this.vaporRot} />
+            <FloorWire position={this.floorPosition} sin={this.sinFunc} />
             <mesh
-              position={this.floorPosition}
+              position={this.subPosition}
               receiveShadow={true}
               name="subFloor"
               >
